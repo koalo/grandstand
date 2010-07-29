@@ -1,6 +1,6 @@
-# Grandstand
+require 'grandstand/application'
+
 module Grandstand
-  autoload(:Application, 'grandstand/application')
   autoload(:Controller, 'grandstand/controller')
   autoload(:Helper, 'grandstand/helper')
 

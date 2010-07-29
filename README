@@ -1,13 +1,7 @@
 Grandstand
 ==========
 
-Introduction goes here.
+Grandstand is a Rails 3 (only!) Gem that allows you to build totally simple blogs and portfolios using a gallery and blog post
+editor. It's under active development, so don't get all excited just yet!
 
-
-Example
-=======
-
-Example goes here.
-
-
-Copyright (c) 2010 [name of plugin creator], released under the MIT license
+Copyright (c) 2010 Flip Sasser, released under the MIT license
