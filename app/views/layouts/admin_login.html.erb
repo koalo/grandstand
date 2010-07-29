@@ -4,8 +4,8 @@
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <title><% if current_page %><%= current_page.title %> - <% end %>Grandstand</title>
-  <%= javascript_include_tag('/admin/javascripts/jquery', '/admin/javascripts/application', :cache => 'admin_application') %>
-  <%= stylesheet_link_tag('/admin/stylesheets/global', '/admin/stylesheets/login', :cache => 'admin_login') %>
+  <%= javascript_include_tag('/admin/javascripts/jquery', '/admin/javascripts/application') %>
+  <%= stylesheet_link_tag('/admin/stylesheets/global', '/admin/stylesheets/login') %>
 </head>
 <body class="admin">
   <%= render :partial => 'admin/shared/flash', :locals => {:flash => flash} %>
