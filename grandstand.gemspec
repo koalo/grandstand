@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{grandstand}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Flip Sasser"]
@@ -19,7 +19,8 @@ Gem::Specification.new do |s|
     "README"
   ]
   s.files = [
-    "MIT-LICENSE",
+    ".gitignore",
+     "MIT-LICENSE",
      "README",
      "Rakefile",
      "VERSION",
@@ -118,10 +119,14 @@ Gem::Specification.new do |s|
      "lib/grandstand/helper.rb",
      "lib/grandstand/routes.rb",
      "lib/grandstand/session.rb",
+     "public/.DS_Store",
+     "public/admin/.DS_Store",
+     "public/admin/images/.DS_Store",
      "public/admin/images/background-input.gif",
      "public/admin/images/background-progress-bar.png",
      "public/admin/images/background-progress-complete.gif",
      "public/admin/images/background-progress.gif",
+     "public/admin/images/icons/.DS_Store",
      "public/admin/images/icons/add.png",
      "public/admin/images/icons/collapse.png",
      "public/admin/images/icons/delete.png",
@@ -163,7 +168,6 @@ Gem::Specification.new do |s|
      "public/admin/stylesheets/login.css",
      "public/admin/stylesheets/wysiwyg-content.css",
      "public/admin/stylesheets/wysiwyg.css",
-     "rails/init.rb",
      "vendor/cache/more-0.1.1.gem"
   ]
   s.homepage = %q{http://github.com/flipsasser/grandstand}
