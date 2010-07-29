@@ -1,0 +1,20 @@
+<%= render :partial => 'left' %>
+<h1 class="pages icon">Pages</h1>
+<% if @pages.empty? -%>
+<div class="inset">
+  <h2>You haven't created any pages!</h2>
+  <b class="grey">Get started:</b> <%= button_link_to('Add a Page', new_admin_page_path, :icon => 'add') %>
+</div>
+<% else -%>
+<table class="grid">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="2">URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'row', :collection => @pages, :as => :page, :locals => {:indent => 0} %>
+  </tbody>
+</table>
+<% end -%>

@@ -1,0 +1,11 @@
+<h2>Upload Multiple Image</h2>
+<%= form_for(Image.new, :html => {:multipart => true}, :url => admin_gallery_images_path) do |form| %>
+  <%= hidden_field_tag :session_key, request.cookies[Rails.application.config.session_options[:key]] %>
+  <div class="field">
+    Use the button below to select files to upload. You can hold "shift" to select more than one file.
+  </div>
+  <table id="uploads" style="height:0;"><tbody></tbody></table>
+  <div class="toolbar">
+    <%= form.file_field :file %>
+  </div>
+<% end =%>

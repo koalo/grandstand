@@ -1,0 +1,8 @@
+<h2>New Gallery</h2>
+<% form_for(@gallery, :url => admin_galleries_path) do |form| -%>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <div class="toolbar">
+    <%= button 'Add Gallery' %>
+    <%= button_link_to('Cancel', admin_galleries_path, :class => 'cancel') %>
+  </div>
+<% end -%>

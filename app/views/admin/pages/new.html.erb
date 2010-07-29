@@ -1,0 +1,8 @@
+<h1 class="pages icon">New Page</h1>
+<%= form_for(@page, :url => admin_pages_path) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <div class="toolbar">
+    <%= button 'Add Page' %>
+    <%= button_link_to('Cancel', admin_pages_path, :class => 'cancel') %>
+  </div>
+<% end =%>

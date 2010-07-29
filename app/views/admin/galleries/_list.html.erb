@@ -1,0 +1,17 @@
+<% galleries.each do |gallery| -%>
+<div class="inset gallery container" id="galleries_<%= gallery.url %>">
+  <div class="header">
+    <div class="float-left gallery icon">
+      <%= (gallery.name) %>
+    </div>
+    <div class="float-right">
+      <%= link_to '', edit_admin_gallery_path(gallery), :class => 'edit icon remote' %>
+      <%= link_to '', delete_admin_gallery_path(gallery), :class => 'delete icon remote' %>
+    </div>
+  </div>
+  <%= link_to(image_tag(gallery.cover_image.file.url(:admin_medium)), admin_gallery_path(gallery)) %>
+  <% gallery.images.limit(100).each do |image| -%>
+  <%= image_tag(image.file.url(:admin_medium)) %>
+  <% end -%>
+</div>
+<% end -%>

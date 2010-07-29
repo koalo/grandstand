@@ -1,0 +1,8 @@
+<h2>Edit Image</h2>
+<% form_for(@image, :html => {:multipart => true}, :url => admin_gallery_image_path(@gallery, @image)) do |form| %>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <div class="toolbar">
+    <%= button 'Save' %>
+    <%= button_link_to('Cancel', admin_gallery_path(@gallery), :class => 'cancel') %>
+  </div>
+<% end %>

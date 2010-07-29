@@ -1,0 +1,19 @@
+<form action="<%= request.fullpath %>" method="POST">
+  <div class="source">
+    <div class="header">Galleries</div>
+    <% @galleries.each_with_index do |gallery, index| -%>
+    <a<%= raw ' class="active"' if index.zero? %> href="<%= admin_gallery_path(gallery) %>" rel="gallery-<%= gallery.to_param %>">
+      <span class="icon" style="background-image:url(<%= gallery.cover_image.file.url(:admin_icon) %>);"><%= gallery.name %></span>
+    </a>
+    <% end -%>
+  </div>
+  <div class="destination">
+    <div class="scrollable">
+      <% @galleries.each_with_index do |gallery, index| -%>
+      <div id="gallery-<%= gallery.to_param %>"<%= raw ' style="display:none;"' unless index.zero? %>>
+        <%= render :partial => 'gallery', :locals => {:gallery => gallery} %>
+      </div>
+      <% end -%>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,22 @@
+<table class="grid">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+      <th colspan="2">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% posts.each do |post| -%>
+    <tr class="row <%= cycle 'one', 'two' %>">
+      <td><%= link_to post.name, admin_post_path(post) %></td>
+      <td><%= link_to_if(post.user, post.user.try(:name), admin_user_path(post.user)) %></td>
+      <td><%= post.created_at.to_date %>
+      <td class="actions">
+        <%= button_link_to 'Edit', edit_admin_post_path(post), :icon => :edit %>
+        <%= button_link_to 'Delete', delete_admin_post_path(post), :icon => :delete %>
+      </td>
+    </tr>
+    <% end -%>
+  </tbody>
+</table>

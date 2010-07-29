@@ -1,0 +1,10 @@
+<div class="inset galleries icon">
+  <% if (count = Gallery.count).zero? -%>
+  <h2>You haven't set up any galleries!</h2>
+  <b class="grey">Get started:</b> <%= button_link_to('Add a Gallery', new_admin_gallery_path, :class => 'remote') %>
+  <% else %>
+  <h2>You have <%= pluralize(count, 'gallery') %></h2>
+  <%= button_link_to('Visit', admin_galleries_path) %>
+  <%= button_link_to('Add Another One', new_admin_gallery_path, :class => 'grey remote') %>
+  <% end -%>
+</div>

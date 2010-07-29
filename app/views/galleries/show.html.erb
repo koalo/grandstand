@@ -1,0 +1,12 @@
+<div id="image">
+  <%= image_tag(@gallery.cover_image.url(:page)) %>
+</div>
+<div id="thumbnails">
+  <% @gallery.images.each do |image| %>
+  <%= link_to(image_tag(image.url(:icon)), "#image-#{image.id}") %>
+  <% end -%>
+</div>
+<div class="post summary">
+  <h2><%= @gallery.name %></h2>
+  <%= raw(simple_format(@gallery.description)) %>
+</div>

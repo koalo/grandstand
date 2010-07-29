@@ -1,0 +1,14 @@
+<div id="image">
+  {{#cover}}
+  <img alt="{{alt}}" height="{{height}}" src="{{src}}" width="{{width}}" />
+  {{/cover}}
+</div>
+<div id="thumbnails">
+  {{#images}}
+  <a href="#image-{{id}}"><img alt="{{alt}}" height="{{height}}" src="{{icon}}" width="{{width}}" /></a>
+  {{/images}}
+</div>
+<div class="post summary">
+  <h2>{{name}}</h2>
+  {{{description}}}
+</div>

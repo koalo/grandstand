@@ -1,0 +1,238 @@
+/*
+  application.less contains all of the layout elements for the logged-in application state. This is styling
+  for the editor UI ONLY. It relies heavily on global.less, which provides all form element styling and much
+  of the generic UI found in the app - including during inline editing and the like.
+*/
+@import url('_buttons');
+
+/* Layout Elements */
+
+body {
+  overflow:hidden;
+}
+
+#header {
+  background-color:#eee;
+  background-image:-moz-linear-gradient(top, #eee, #ddd);
+  background-image:-webkit-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
+  border-bottom:1px solid #eee;
+  border-top:1px solid #fff;
+  height:32px;
+  left:0;
+  padding:0 10px;
+  position:absolute;
+  width:100%;
+  z-index:2;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  -moz-box-shadow:#111 0 2px 2px;
+  -webkit-box-shadow:#999 0 1px 2px;  
+
+  .float-right {
+    line-height:30px;
+  /*  margin-top:11px;*/
+  }
+
+  .float-right a {
+    color:#000;
+    display:inline-block;
+    padding:0 7px;
+  }
+
+  .float-right a:hover {
+    background-color:rgba(255, 255, 255, 0.3);
+    text-decoration:underline;
+  }
+}
+
+#logo {
+  display:inline-block;
+  padding-top:0;
+}
+
+#content {
+  height:100%;
+  overflow:hidden;
+  padding:31px 0 0 0;
+  position:absolute;
+  width:100%;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+
+#left {
+  left:20px;
+  position:absolute;
+  top:51px;
+  width:150px;
+
+  .button {
+    display:block;
+    margin-bottom:10px;
+  }
+
+  ul {
+    background-color:#ececec;
+    background-image:-moz-linear-gradient(top, #f4f4f4, #ececec);
+    background-image:-webkit-gradient(linear, left top, left bottom, from(#f4f4f4), to(#ececec));
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+
+    li.first {
+      > a {
+        border-top-color:#d4d4d4;
+        -webkit-border-top-left-radius:2px;
+      }
+
+      a.expand {
+        -webkit-border-top-left-radius:0;
+        -webkit-border-top-right-radius:2px;
+      }
+    }
+
+    li {
+      margin:0;
+      padding:0;
+
+      a {
+        #grandstand > .button-default;
+        border-top-color:#f4f4f4;
+        display:block;
+        padding:5px;
+        -moz-border-radius:0;
+        -webkit-border-radius:0;
+      }
+
+      a:hover {
+        #grandstand > .button-hover;
+      }
+
+      a:active {
+        #grandstand > .button-active;
+      }
+
+      a.expand {
+        float:right;
+        margin-right:0;
+        height:26px;
+        line-height:26px;
+        padding:0;
+        width:15px;
+
+        span {
+          background:url(../images/icons/expand.png) center bottom no-repeat;
+          display:block;
+          height:16px;
+          margin-top:4px;
+          width:16px;
+        }
+      }
+
+      ul {
+        display:none;
+
+        li a {
+          font-size:10px;
+          padding-left:20px;
+        }
+      }
+    }
+
+    li.expandable {
+      > a {
+        border-right-width:0;
+      }
+
+      > a.expand {
+        border-right-width:1px;
+      }
+    }
+
+    li.last a {
+      -webkit-border-bottom-left-radius:2px;
+      -webkit-border-bottom-right-radius:2px;
+    }
+
+    li.expanded {
+      a.expand span {
+        background-image:url(../images/icons/collapse.png);
+      }
+
+      ul {
+        display:block;
+      }
+    }
+  }
+}
+
+#main {
+  height:100%;
+  padding:20px 20px 20px 190px;
+  overflow-x:hidden;
+  overflow-y:auto;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+
+#cover {
+  background-color:#000;
+  height:100%;
+  left:0;
+  opacity:0.6;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:2;
+}
+
+#pulldown {
+  left:50%;
+  margin-left:-200px;
+  position:fixed;
+  top:0;
+  width:400px;
+  z-index:3;
+
+  h2 {
+    background:#fafafa;
+    border-bottom:1px solid #ddd;
+    color:#555;
+    font-size:10pt;
+    margin-bottom:0;
+    padding:5px;
+    text-shadow:#fff 0 1px 0;
+  }
+
+  form {
+    border-top:1px solid #fff;
+    margin:0;
+  }
+
+  form .field {
+    background:#f0f0f0;
+    padding:10px;
+  }
+
+  .toolbar {
+    #grandstand > .styled-toolbar;
+    border-top:1px solid #888;
+    text-align:right;
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-bottom-left-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+
+    .button {
+      border-color:#888;
+    }
+  }
+}

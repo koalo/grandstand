@@ -1,0 +1,11 @@
+<% wrap_admin_form do -%>
+  <div class="field">
+    <%= form.label :file %>
+    <%= form.file_field :file %>
+    <%= errors_on(:image, :file) %>
+  </div>
+  <div class="field">
+    <%= form.label :caption %>
+    <%= form.text_area :caption %>
+  </div>
+<% end %>

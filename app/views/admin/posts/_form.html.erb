@@ -1,0 +1,29 @@
+<% if params[:preview] == 'yup' %>
+  <% content_for :head do -%>
+  <%= javascript_include_tag '/admin/javascripts/jquery.js', '/admin/javascripts/application.js' %>
+  <%= stylesheet_link_tag '/admin/stylesheets/external.css' %>
+  <% end -%>
+  <% post = Post.new(
+    :body => form.text_area(:body, :class => 'wysiwyg'),
+    :name => form.text_field(:name, :class => 'oversized text')
+  ) -%>
+  <div class="admin">
+    <%= raw Mustache.render(::Template.post, post.as_json) %>
+  </div>
+<% else -%>
+<%= render :partial => 'left' %>
+<% content_for :head do -%>
+<%= stylesheet_link_tag '/admin/stylesheets/wysiwyg.css' %>
+<% end -%>
+<% wrap_admin_form do -%>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, :class => 'oversized text' %>
+    <%= errors_on(:post, :name) %>
+  </div>
+  <div class="field">
+    <%= form.label :body %>
+    <%= form.text_area :body, :class => 'wysiwyg' %>
+  </div>
+<% end -%>
+<% end -%>

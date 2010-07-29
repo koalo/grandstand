@@ -1,0 +1,16 @@
+<% editable ||= false -%>
+<% gallery.images.each do |image| -%>
+<div class="inset image container" id="images_<%= image.id %>">
+  <% if editable -%>
+  <div class="header">
+    <div class="float-left image icon">
+      <%= truncate(image.file.original_filename, :length => 23) %>
+    </div>
+    <div class="float-right">
+      <%= link_to '', edit_admin_gallery_image_path(gallery, image), :class => 'edit icon remote' %><%= link_to '', delete_admin_gallery_image_path(gallery, image), :class => 'delete icon remote' %>
+    </div>
+  </div>
+  <% end -%>
+  <%= image_tag(image.file.url(:admin_medium), :alt => image.caption) %>
+</div>
+<% end -%>
