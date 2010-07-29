@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{grandstand}
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Flip Sasser"]
@@ -119,6 +119,7 @@ Gem::Specification.new do |s|
      "lib/grandstand/helper.rb",
      "lib/grandstand/routes.rb",
      "lib/grandstand/session.rb",
+     "pkg/grandstand-0.2.1.gem",
      "public/.DS_Store",
      "public/admin/.DS_Store",
      "public/admin/images/.DS_Store",
