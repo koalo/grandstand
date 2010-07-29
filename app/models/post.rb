@@ -8,11 +8,25 @@ class Post < ActiveRecord::Base
 
   class << self
     def extract_month(attribute)
-      "strftime('%m', #{attribute})"
+      case configurations[Rails.env]['adapter'].to_sym
+      when :sqlite, :sqlite3
+        "strftime('%m', #{attribute})"
+      when :postgre, :postgres, :postgresql
+        "EXTRACT(month FROM #{attribute})"
+      when :mysql
+        "MONTH(#{attribute})"
+      end
     end
 
     def extract_year(attribute)
-      "strftime('%Y', #{attribute})"
+      case configurations[Rails.env]['adapter'].to_sym
+      when :sqlite, :sqlite3
+        "strftime('%Y', #{attribute})"
+      when :postgre, :postgres, :postgresql
+        "EXTRACT(year FROM #{attribute})"
+      when :mysql
+        "YEAR(#{attribute})"
+      end
     end
   end
 
