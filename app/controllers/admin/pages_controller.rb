@@ -40,7 +40,7 @@ class Admin::PagesController < Admin::MainController
 
   protected
   def build_page_sections
-    Grandstand::Application.page_sections.each do |page_section|
+    Grandstand.page_sections.each do |page_section|
       @page.page_sections.where(:section => page_section).first || @page.page_sections.build(:section => page_section)
     end
   end

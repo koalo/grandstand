@@ -1,49 +1,35 @@
 require 'rails'
 require 'grandstand'
+require 'grandstand/controller'
+require 'grandstand/helper'
+require 'grandstand/session'
 
 module Grandstand
   class Application < Rails::Engine
-    paths.config.routes = 'lib/routes.rb'
-    
-    initializer 'grandstand.add_session_extension', :after => :load_application_initializers do |app|
-      # puts "Adding middleware (#{app.config.session_options.inspect})"
+    initializer 'grandstand.initialize', :after => :load_application_initializers do |app|
+      # Add sessions for Flash file uploads - but this is *not* very secure!
       app.middleware.insert_before(ActionDispatch::ShowExceptions, Grandstand::Session, app.config.session_options[:key] || app.config.session_options['key'])
-      Grandstand.initialize!
-    end
-    
-    initializer 'grandstand.symlink_public_files' do |app|
-      Dir[File.join(File.dirname(__FILE__), '..', 'public', '*')].each do |gem_path|
-        user_path = File.join(app.root, 'public', File.basename(gem_path))
-        # puts "Copying #{gem_path} to #{user_path}"
-        if File.file?(gem_path) && !File.file?(user_path)
-          FileUtils.cp_r(gem_path, user_path)
-        elsif File.directory?(gem_path) && !File.directory?(user_path)
-          FileUtils.cp_r(gem_path, user_path)
-        end
+      # Extend ActionController to have the Grandstand defaults (current_user and its friends)
+      ActionController::Base.send :include, Grandstand::Controller
+      # Add Paperclip padded_id interpolation for gallery images (pretty URLs)
+      Paperclip.interpolates :padded_id do |attachment, style|
+        attachment.instance.id.to_s.rjust(6, '0')
       end
     end
 
-    class << self
-      def app_name
-        @app_name ||= 'Portfoliawesome'
-      end
-
-      def image_sizes
-        {
-          :icon => '75x75#',
-          :page => '541x' 
-        }
-      end
-
-      def page_sections
-        %w(left main)
-      end
-
-      def s3
-        @s3 ||= {
-          :bucket => nil,
-          :credentials => File.join(Rails.root, 'config', 's3.yml')
-        }
+    # Serve admin assets in development mode. Be sure to run rake 
+    if Rails.env.development?
+      initializer 'grandstand.development_mode', :after => :load_application_initializers do |app|
+        app.middleware.insert_after ::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public"
+        # Extend development mode to allow us to build our admin LESS files on-the-fly
+        ActionController::Base.send :include, Grandstand::Controller::Development
+        # Tell Less to produce the smallest stylesheets it's capable of
+        Less::More.compression = true
+        Less::More.header = false
+        # Point More to our plugins' source_path and our custom admin stylesheets folder
+        Less::More.source_path = File.join('vendor', 'plugins', 'grandstand', 'app', 'stylesheets')
+        Less::More.destination_path = File.join('admin', 'stylesheets')
+        ActionView::Base.send :include, Grandstand::Helper
       end
     end
   end

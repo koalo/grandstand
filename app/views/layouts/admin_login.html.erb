@@ -9,7 +9,7 @@
 </head>
 <body class="admin">
   <%= render :partial => 'admin/shared/flash', :locals => {:flash => flash} %>
-  <%= link_to(image_tag('/admin/images/logo.png', :alt => Grandstand::Application.app_name), admin_root_path, :id => 'logo') %>
+  <%= link_to(image_tag('/admin/images/logo.png', :alt => Grandstand.app_name), admin_root_path, :id => 'logo') %>
   <div class="inset" id="login">
     <%= yield %>
   </div>

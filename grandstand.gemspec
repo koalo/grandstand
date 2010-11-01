@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{grandstand}
-  s.version = "0.2.3"
+  s.version = "0.2.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Flip Sasser"]
-  s.date = %q{2010-07-29}
+  s.date = %q{2010-10-28}
   s.description = %q{
       Grandstand is a simple blog and photo gallery application. It takes a minimal amount of configuration and can
       be built installed as a gem and used like any other thingymagig. It's totally cool.
@@ -182,9 +182,24 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<aws-s3>, [">= 0.6.2"])
+      s.add_runtime_dependency(%q<mustache>, [">= 0.11.2"])
+      s.add_runtime_dependency(%q<paperclip>, [">= 2.3.3"])
+      s.add_runtime_dependency(%q<less>, [">= 1.2.21"])
+      s.add_runtime_dependency(%q<more>, [">= 0.1.1"])
     else
+      s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
+      s.add_dependency(%q<mustache>, [">= 0.11.2"])
+      s.add_dependency(%q<paperclip>, [">= 2.3.3"])
+      s.add_dependency(%q<less>, [">= 1.2.21"])
+      s.add_dependency(%q<more>, [">= 0.1.1"])
     end
   else
+    s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
+    s.add_dependency(%q<mustache>, [">= 0.11.2"])
+    s.add_dependency(%q<paperclip>, [">= 2.3.3"])
+    s.add_dependency(%q<less>, [">= 1.2.21"])
+    s.add_dependency(%q<more>, [">= 0.1.1"])
   end
 end
 

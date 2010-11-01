@@ -10,7 +10,11 @@
     <% posts.each do |post| -%>
     <tr class="row <%= cycle 'one', 'two' %>">
       <td><%= link_to post.name, admin_post_path(post) %></td>
-      <td><%= link_to_if(post.user, post.user.try(:name), admin_user_path(post.user)) %></td>
+      <% if post.user -%>
+      <td><%= link_to(post.user.name, admin_user_path(post.user)) %></td>
+      <% else -%>
+      <td><i>none</i></td>
+      <% end -%>
       <td><%= post.created_at.to_date %>
       <td class="actions">
         <%= button_link_to 'Edit', edit_admin_post_path(post), :icon => :edit %>

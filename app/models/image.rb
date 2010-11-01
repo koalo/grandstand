@@ -9,10 +9,10 @@ class Image < ActiveRecord::Base
     :styles => {
       :admin_icon => '16x16#',
       :admin_medium => '200x200#'
-    }.merge(Grandstand::Application.image_sizes),
+    }.merge(Grandstand.image_sizes),
     :storage => :s3,
-    :s3_credentials => Grandstand::Application.s3[:credentials],
-    :bucket => Grandstand::Application.s3[:bucket]
+    :s3_credentials => Grandstand.s3[:credentials],
+    :bucket => Grandstand.s3[:bucket]
 
   delegate :url, :to => :file
 

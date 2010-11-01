@@ -17,7 +17,7 @@
   <%= render :partial => 'admin/shared/flash', :locals => {:flash => flash} %>
   <div id="header">
     <div class="float-left">
-      <%= link_to(image_tag('/admin/images/logo.png', :alt => Grandstand::Application.app_name), admin_root_path, :id => 'logo') %>
+      <%= link_to(image_tag('/admin/images/logo.png', :alt => Grandstand.app_name), admin_root_path, :id => 'logo') %>
     </div>
     <div class="float-right">
       <%= link_to('View Site', '/', :target => :new) %>
@@ -29,9 +29,9 @@
       <%= yield :left %>
       <ul>
         <li<%= expand(:posts, :class => 'first') %>>
-          <%= expand_link(:posts) %>
+          <%= expand_link(:posts) unless no_posts = Post.count.zero? %>
           <%= link_to('Blog Posts', admin_posts_path) %>
-          <% unless Post.count.zero? -%>
+          <% unless no_posts -%>
           <ul>
             <% Post.limit(10).each do |post| -%>
             <li><%= link_to(post.name, admin_post_path(post)) %></li>
@@ -40,9 +40,9 @@
           <% end -%>
         </li>
         <li<%= expand(:galleries, :images) %>>
-          <%= expand_link(:galleries) %>
+          <%= expand_link(:galleries) unless no_galleries = Gallery.count.zero? %>
           <%= link_to('Galleries', admin_galleries_path) %>
-          <% unless Gallery.count.zero? -%>
+          <% unless no_galleries -%>
           <ul>
             <% Gallery.limit(10).each do |gallery| -%>
             <li><%= link_to(gallery.name, admin_gallery_path(gallery)) %></li>

@@ -1,7 +1,9 @@
+if defined?(Rails) && Rails.env.development?
+  require 'grandstand/controller/development'
+end
+
 module Grandstand
   module Controller
-    autoload(:Development, 'grandstand/controller/development')
-
     def self.included(base)
       base.helper_method :current_page, :current_user, :return_path
     end

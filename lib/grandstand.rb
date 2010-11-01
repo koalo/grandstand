@@ -1,27 +1,56 @@
+# Require the Gems we need for this guy
+gem 'aws-s3'
+require 'aws/s3'
+require 'mustache'
+require 'paperclip'
+require 'less'
+require 'less/more'
+
 require 'grandstand/application'
 
 module Grandstand
-  autoload(:Controller, 'grandstand/controller')
-  autoload(:Helper, 'grandstand/helper')
+  # Some basic configuration options - app name ('Grandstand'), image sizes, content areas, etc.
+  class << self
+    def admin
+      @admin ||= {:ssl => true}
+    end
 
-  def self.initialize!(config = nil)
-    if defined?(ActionController)
-      ActionController::Base.send :include, Grandstand::Controller
-      if Rails.env.development?
-        ActionController::Base.send :include, Grandstand::Controller::Development
-        # Tell Less to produce the smallest stylesheets it's capable of
-        Less::More.compression = true
-        Less::More.header = false
-        # Point More to our plugins' source_path and our custom admin stylesheets folder
-        Less::More.source_path = File.join('vendor', 'plugins', 'grandstand', 'app', 'stylesheets')
-        Less::More.destination_path = File.join('admin', 'stylesheets')
-      end
+    def admin=(new_admin)
+      @admin = new_admin
     end
-    if defined?(ActionView)
-      ActionView::Base.send :include, Grandstand::Helper
+
+    def app_name
+      @app_name ||= 'Grandstand'
     end
-    Paperclip.interpolates :padded_id do |attachment, style|
-      attachment.instance.id.to_s.rjust(6, '0')
+
+    def image_sizes
+      @images_sizes ||= {
+        :icon => '75x75#',
+        :page => '541x' 
+      }
+    end
+
+    def image_sizes=(new_image_sizes)
+      @images_sizes = new_image_sizes
+    end
+
+    def page_sections
+      @page_sections ||= %w(left main)
+    end
+
+    def page_sections=(new_page_sections)
+      @page_sections = new_page_sections
+    end
+
+    def s3
+      @s3 ||= {
+        :bucket => nil,
+        :credentials => File.join(Rails.root, 'config', 's3.yml')
+      }
+    end
+
+    def s3=(new_s3)
+      @s3 = new_s3
     end
   end
 end

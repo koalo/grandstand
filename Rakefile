@@ -38,6 +38,11 @@ begin
     gemspec.homepage = "http://github.com/flipsasser/grandstand"
     gemspec.authors = ["Flip Sasser"]
     gemspec.test_files = []
+    gemspec.add_dependency 'aws-s3', '>= 0.6.2'
+    gemspec.add_dependency 'mustache', '>= 0.11.2'
+    gemspec.add_dependency 'paperclip', '>= 2.3.3'
+    gemspec.add_dependency 'less', '>= 1.2.21'
+    gemspec.add_dependency 'more', '>= 0.1.1'
   end
 rescue
   puts "Jeweler or one of its dependencies is not installed."
