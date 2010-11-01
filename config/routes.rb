@@ -1,4 +1,7 @@
 Rails::Application.routes.draw do |map|
+  # resources :galleries, :only => [:index, :show]
+  # match ':year/:month/:id', :to => 'posts#show', :as => 'post', :constraints => {:year => /\d\d\d\d/, :month => /\d{1,2}/}
+
   namespace :admin, :path => Grandstand.admin[:domain] ? '' : 'admin', :constraints => {:domain => Grandstand.admin[:domain]} do
     resource :session do
       member do

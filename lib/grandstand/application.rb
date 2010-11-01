@@ -17,7 +17,6 @@ module Grandstand
       end
     end
 
-    # Serve admin assets in development mode. Be sure to run rake 
     if Rails.env.development?
       initializer 'grandstand.development_mode', :after => :load_application_initializers do |app|
         app.middleware.insert_after ::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public"
