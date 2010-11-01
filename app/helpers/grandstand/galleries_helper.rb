@@ -1,0 +1,2 @@
+module Grandstand::GalleriesHelper
+end

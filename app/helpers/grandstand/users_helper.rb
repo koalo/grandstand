@@ -1,0 +1,2 @@
+module Grandstand::UsersHelper
+end

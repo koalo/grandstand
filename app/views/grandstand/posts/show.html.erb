@@ -1,0 +1,4 @@
+<%= render :partial => 'left' %>
+<h1 class="posts icon"><%= @post.name %> <%= button_link_to('Edit', edit_grandstand_post_path(@post), :icon => 'edit') %></h1>
+<div class="quiet"><%= link_to url = post_url(@post.created_at.year, @post.created_at.month, @post.url), url %></div>
+<%= raw @post.body %>

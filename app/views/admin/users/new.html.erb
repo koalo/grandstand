@@ -1,8 +1,0 @@
-<h2>New User</h2>
-<% form_for(@user, :url => admin_users_path) do |form| -%>
-  <%= render :partial => 'form', :locals => {:form => form} %>
-  <div class="toolbar">
-    <%= button 'Add User' %>
-    <%= button_link_to('Cancel', admin_users_path, :class => 'cancel') %>
-  </div>
-<% end -%>

@@ -1,8 +1,0 @@
-<h2>Upload Image</h2>
-<% form_for(@image, :html => {:multipart => true}, :url => admin_gallery_images_path) do |form| %>
-  <%= render :partial => 'form', :locals => {:form => form} %>
-  <div class="toolbar">
-    <%= button 'Add Image' %>
-    <%= button_link_to('Cancel', admin_gallery_path(@gallery), :class => 'cancel') %>
-  </div>
-<% end %>

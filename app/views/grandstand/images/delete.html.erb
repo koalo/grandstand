@@ -1,0 +1,8 @@
+<h2>Are you sure you want to do this?</h2>
+<% form_for(@image, :html => {:method => :delete}, :url => grandstand_gallery_image_path(@gallery, @image)) do %>
+  <div class="field">You cannot undo this once it's done! This image will be gone forever - poof!</div>
+  <div class="toolbar">
+    <%= button('Delete') %>
+    <%= button_link_to('Cancel', grandstand_gallery_path(@gallery), :class => 'cancel') %>
+  </div>
+<% end %>

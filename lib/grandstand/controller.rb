@@ -1,7 +1,3 @@
-if defined?(Rails) && Rails.env.development?
-  require 'grandstand/controller/development'
-end
-
 module Grandstand
   module Controller
     def self.included(base)
@@ -13,14 +9,14 @@ module Grandstand
     # the current requests' URL. Very frequently nil!
     def current_page
       return @_current_page if defined? @_current_page
-      @_current_page = Page.where(:url => request.path.reverse.chomp('/').reverse).first
+      @_current_page = Grandstand::Page.where(:url => request.path.reverse.chomp('/').reverse).first
     end
     protected :current_page
 
     # Predictably, `current_user` will return the currently logged-in user.
     def current_user
       # Ask Rack for a model first - this makes it easy to add SSO middleware
-      @_user ||= request.env['user'] || User.first(:conditions => {:id => session[:user_id]}) if session[:user_id]
+      @_user ||= request.env['user'] || Grandstand::User.first(:conditions => {:id => session[:user_id]}) if session[:user_id]
     end
     protected :current_user
 
@@ -59,7 +55,7 @@ module Grandstand
         # Remember any post variables the user may have sent between logout and now.
         # session[:post_params] = params.except(:controller, :action, :id).merge({:_method => request.method}) unless request.get?
         # Send them off to the correct login path
-        redirect_to(admin_session_path) and return false
+        redirect_to(grandstand_session_path) and return false
       end
     end              
 
@@ -97,7 +93,7 @@ module Grandstand
     #   end
     # 
     # It's also a quick way to return a user to previous action post-login - see
-    # Admin::SessionController#create for more details and an example
+    # Grandstand::SessionController#create for more details and an example
     def set_return_path(path = nil)
       session[:return_path] = path || request.fullpath
     end

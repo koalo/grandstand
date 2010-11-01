@@ -1,0 +1,15 @@
+<% content_for :left do %>
+  <%= button_link_to('Upload An Image', new_grandstand_gallery_image_path(@gallery), :class => 'remote', :icon => 'upload') %>
+  <%= button_link_to('Upload Multiple', upload_grandstand_gallery_images_path(@gallery), :class => 'remote', :icon => 'upload') %>
+<% end %>
+<h1 class="galleries icon"><%= @gallery.name %> <%= button_link_to('Edit', edit_grandstand_gallery_path(@gallery), :class => 'remote', :icon => 'edit') %></h1>
+<% if @gallery.images.empty? -%>
+<div class="inset">
+  <h2>You haven't uploaded any images!</h2>
+  <b class="grey">Get started:</b> <%= button_link_to('Upload an Image', new_grandstand_gallery_image_path(@gallery), :class => 'remote') %>
+</div>
+<% else -%>
+<div class="images sortable">
+  <%= render :partial => 'gallery', :locals => {:gallery => @gallery, :editable => true} %>
+</div>
+<% end -%>

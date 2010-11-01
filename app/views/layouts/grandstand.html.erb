@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>Grandstand Admin</title>
+  <%= javascript_include_tag('/grandstand/javascripts/jquery', '/grandstand/javascripts/application') %>
+  <%= stylesheet_link_tag('/grandstand/stylesheets/global', '/grandstand/stylesheets/application') %>
+  <%= csrf_meta_tag %>
+  <%= yield :head %>
+</head>
+<body class="grandstand">
+  <%= render :partial => 'grandstand/shared/flash', :locals => {:flash => flash} %>
+  <div id="header">
+    <div class="float-left">
+      <%= link_to(image_tag('/grandstand/images/logo.png', :alt => Grandstand.app_name), grandstand_root_path, :id => 'logo') %>
+    </div>
+    <div class="float-right">
+      <%= link_to('View Site', '/', :target => :new) %>
+      <%= link_to('Logout', grandstand_session_path, :method => :delete) %>
+    </div>
+  </div>
+  <div id="content">
+    <div id="left">
+      <%= yield :left %>
+      <ul>
+        <li<%= expand(:posts, :class => 'first') %>>
+          <%= expand_link(:posts) unless no_posts = Grandstand::Post.count.zero? %>
+          <%= link_to('Blog Posts', grandstand_posts_path) %>
+          <% unless no_posts -%>
+          <ul>
+            <% Grandstand::Post.limit(10).each do |post| -%>
+            <li><%= link_to(post.name, grandstand_post_path(post)) %></li>
+            <% end -%>
+          </ul>
+          <% end -%>
+        </li>
+        <li<%= expand(:galleries, :images) %>>
+          <%= expand_link(:galleries) unless no_galleries = Grandstand::Gallery.count.zero? %>
+          <%= link_to('Galleries', grandstand_galleries_path) %>
+          <% unless no_galleries -%>
+          <ul>
+            <% Grandstand::Gallery.limit(10).each do |gallery| -%>
+            <li><%= link_to(gallery.name, grandstand_gallery_path(gallery)) %></li>
+            <% end -%>
+          </ul>
+          <% end -%>
+        </li>
+        <% if false -%>
+        <li<%= expand(:pages) %>>
+          <%= expand_link(:pages) %>
+          <%= link_to('Pages', grandstand_pages_path) %>
+          <% unless Page.roots.count.zero? -%>
+          <ul>
+            <% Grandstand::Page.roots.limit(10).each do |page| -%>
+            <li><%= link_to(page.name, grandstand_page_path(page)) %></li>
+            <% end -%>
+          </ul>
+          <% end -%>
+        </li>
+        <% end -%>
+        <li class="last">
+          <%= link_to('Users', grandstand_users_path) %>
+        </li>
+      </ul>
+    </div>
+    <div id="main">
+      <%= yield %>
+    </div>
+  </div>
+  <div id="footer">
+  </div>
+  <div id="cover" style="display:none;"></div>
+  <div id="pulldown" style="display:none;"></div>
+</body>
+</html>

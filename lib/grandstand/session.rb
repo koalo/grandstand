@@ -6,7 +6,7 @@ module Grandstand
     end
 
     def call(env)
-      if env['HTTP_USER_AGENT'] =~ /^(Adobe|Shockwave) Flash/ && env['PATH_INFO'] =~ /^\/admin\/galleries\/\d+\/images$/
+      if env['HTTP_USER_AGENT'] =~ /^(Adobe|Shockwave) Flash/ && env['PATH_INFO'] =~ /^\/grandstand\/galleries\/\d+\/images$/
         params = Rack::Request.new(env).POST
         env['HTTP_COOKIE'] = [ @session_key, params.delete('session_key') ].join('=').freeze unless params['session_key'].nil?
       end

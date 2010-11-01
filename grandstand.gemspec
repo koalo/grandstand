@@ -9,19 +9,21 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Flip Sasser"]
-  s.date = %q{2010-10-28}
+  s.date = %q{2010-10-31}
   s.description = %q{
       Grandstand is a simple blog and photo gallery application. It takes a minimal amount of configuration and can
-      be built installed as a gem and used like any other thingymagig. It's totally cool.
+      be built installed as a gem and used within minutes. It's totally cool. Seriously.
     }
   s.email = %q{flip@x451.com}
   s.extra_rdoc_files = [
-    "README"
+    "README.markdown",
+     "README.txt"
   ]
   s.files = [
     ".gitignore",
      "MIT-LICENSE",
-     "README",
+     "README.markdown",
+     "README.txt",
      "Rakefile",
      "VERSION",
      "app/controllers/admin/galleries_controller.rb",
@@ -35,12 +37,15 @@ Gem::Specification.new do |s|
      "app/controllers/galleries_controller.rb",
      "app/controllers/pages_controller.rb",
      "app/controllers/posts_controller.rb",
+     "app/helpers/admin/galleries_helper.rb",
+     "app/helpers/admin/images_helpers.rb",
      "app/helpers/admin/main_helper.rb",
      "app/helpers/admin/pages_helper.rb",
      "app/helpers/admin/posts_helper.rb",
      "app/helpers/admin/sessions_helper.rb",
      "app/helpers/admin/templates_helper.rb",
      "app/helpers/admin/users_helper.rb",
+     "app/helpers/galleries_helper.rb",
      "app/helpers/pages_helper.rb",
      "app/helpers/posts_helper.rb",
      "app/helpers/site_helper.rb",
@@ -102,8 +107,8 @@ Gem::Specification.new do |s|
      "app/views/galleries/index.html.erb",
      "app/views/galleries/show.html.erb",
      "app/views/layouts/admin.html.erb",
-     "app/views/layouts/admin_login.html.erb",
-     "app/views/layouts/admin_xhr.html.erb",
+     "app/views/layouts/grandstand_login.html.erb",
+     "app/views/layouts/grandstand_xhr.html.erb",
      "app/views/pages/show.html.erb",
      "app/views/posts/show.html.erb",
      "app/views/shared/404.html.erb",
@@ -111,6 +116,14 @@ Gem::Specification.new do |s|
      "app/views/shared/image.html",
      "app/views/shared/page.html",
      "app/views/shared/post.html",
+     "config/routes.rb",
+     "db/migrate/20100220032742_create_galleries.rb",
+     "db/migrate/20100220032824_create_images.rb",
+     "db/migrate/20100220032911_create_users.rb",
+     "db/migrate/20100615190000_create_posts.rb",
+     "db/migrate/20100615190007_create_pages.rb",
+     "db/migrate/20100615192132_create_page_sections.rb",
+     "db/migrate/20100615193951_add_users_to_galleries_and_images.rb",
      "grandstand.gemspec",
      "lib/grandstand.rb",
      "lib/grandstand/application.rb",
@@ -182,24 +195,24 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<less>, [">= 1.2.21"])
+      s.add_runtime_dependency(%q<more>, [">= 0.1.1"])
       s.add_runtime_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_runtime_dependency(%q<mustache>, [">= 0.11.2"])
       s.add_runtime_dependency(%q<paperclip>, [">= 2.3.3"])
-      s.add_runtime_dependency(%q<less>, [">= 1.2.21"])
-      s.add_runtime_dependency(%q<more>, [">= 0.1.1"])
     else
+      s.add_dependency(%q<less>, [">= 1.2.21"])
+      s.add_dependency(%q<more>, [">= 0.1.1"])
       s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_dependency(%q<mustache>, [">= 0.11.2"])
       s.add_dependency(%q<paperclip>, [">= 2.3.3"])
-      s.add_dependency(%q<less>, [">= 1.2.21"])
-      s.add_dependency(%q<more>, [">= 0.1.1"])
     end
   else
+    s.add_dependency(%q<less>, [">= 1.2.21"])
+    s.add_dependency(%q<more>, [">= 0.1.1"])
     s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
     s.add_dependency(%q<mustache>, [">= 0.11.2"])
     s.add_dependency(%q<paperclip>, [">= 2.3.3"])
-    s.add_dependency(%q<less>, [">= 1.2.21"])
-    s.add_dependency(%q<more>, [">= 0.1.1"])
   end
 end
 

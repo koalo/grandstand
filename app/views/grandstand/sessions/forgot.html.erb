@@ -1,0 +1,8 @@
+<h1>Forgot Password</h1>
+<% form_tag(reset_grandstand_session_path) do %>
+  <p>
+    <label for="email">E-mail</label>
+    <%= text_field_tag(:email, '', :class => 'oversized text') %>
+  </p>
+  <%= button 'Reset Password', :class => 'grey' %> <%= button_link_to 'Return to Log In', grandstand_session_path %>
+<% end %>

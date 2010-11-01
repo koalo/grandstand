@@ -3,20 +3,26 @@ gem 'aws-s3'
 require 'aws/s3'
 require 'mustache'
 require 'paperclip'
-require 'less'
-require 'less/more'
 
 require 'grandstand/application'
 
 module Grandstand
   # Some basic configuration options - app name ('Grandstand'), image sizes, content areas, etc.
   class << self
-    def admin
-      @admin ||= {:ssl => true}
+    def routing
+      @routing ||= {:ssl => true}
     end
 
-    def admin=(new_admin)
-      @admin = new_admin
+    def routing=(routing)
+      @routing = new_routing
+    end
+
+    def routing_options
+      routing_options = {}
+      if Grandstand.routing[:domain]
+        routing_options.merge!(:path => '', :constraints => {:domain => Grandstand.routing[:domain]})
+      end
+      routing_options
     end
 
     def app_name

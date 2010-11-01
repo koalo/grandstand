@@ -1,0 +1,22 @@
+<%= render :partial => 'left' %>
+<h1 class="users icon">Users</h1>
+<table class="grid">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="2">Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| -%>
+    <tr class="row <%= cycle 'one', 'two' %>">
+      <td><%= link_to user.name, grandstand_user_path(user) %></td>
+      <td><%= user.email %></td>
+      <td class="actions">
+        <%= button_link_to 'Edit', edit_grandstand_user_path(user), :class => 'remote', :icon => :edit %>
+        <%= button_link_to 'Delete', delete_grandstand_user_path(user), :class => 'remote', :icon => :delete unless user.id == current_user.id %>
+      </td>
+    </tr>
+    <% end -%>
+  </tbody>
+</table>

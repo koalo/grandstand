@@ -1,0 +1,12 @@
+<%= render :partial => 'left' %>
+<h1 class="users icon"><%= @user.name %> <%= button_link_to('Edit', edit_grandstand_user_path(@user), :class => 'remote', :icon => 'edit') %></h1>
+<% unless @user.posts.empty? -%>
+<h2>Blog Posts</h2>
+<%= render :partial => 'grandstand/posts/list', :locals => {:posts => @user.posts} %>
+<% end -%>
+<% unless @user.galleries.empty? -%>
+<h2>Galleries</h2>
+<div class="galleries">
+  <%= render :partial => 'grandstand/galleries/list', :locals => {:galleries => @user.galleries} %>
+</div>
+<% end -%>

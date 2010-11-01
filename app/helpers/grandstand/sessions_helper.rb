@@ -1,0 +1,2 @@
+module Grandstand::SessionsHelper
+end

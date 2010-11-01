@@ -1,0 +1,9 @@
+<tr class="row <%= cycle 'one', 'two' %><%= " child-of-#{page.parent_id}" if page.parent_id %>">
+  <td style="padding-left:<%= indent * 10 + 5 %>;"><%= link_to page.name, grandstand_page_path(page) %></td>
+  <td><%= link_to url = page_url(page.url), url %></td>
+  <td class="actions">
+    <%= button_link_to 'Edit', edit_grandstand_page_path(page), :icon => :edit %>
+    <%= button_link_to 'Delete', delete_grandstand_page_path(page), :icon => :delete %>
+  </td>
+</tr>
+<%= render :partial => 'row', :collection => page.children, :as => :page, :locals => {:indent => indent.next} %>

@@ -1,8 +1,5 @@
 Rails::Application.routes.draw do |map|
-  # resources :galleries, :only => [:index, :show]
-  # match ':year/:month/:id', :to => 'posts#show', :as => 'post', :constraints => {:year => /\d\d\d\d/, :month => /\d{1,2}/}
-
-  namespace :admin, :path => Grandstand.admin[:domain] ? '' : 'admin', :constraints => {:domain => Grandstand.admin[:domain]} do
+  namespace :grandstand, Grandstand.routing_options do
     resource :session do
       member do
         get :forgot
@@ -52,6 +49,13 @@ Rails::Application.routes.draw do |map|
       member do
         get :delete
       end
+    end
+  end
+
+  if Rails.env.development?
+    require 'grandstand/stylesheets_controller'
+    namespace :grandstand do
+      get 'stylesheets/:name.css', :to => 'stylesheets#show'
     end
   end
 end

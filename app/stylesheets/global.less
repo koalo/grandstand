@@ -1,15 +1,15 @@
 /*
-  global.less contains the styling for rendering the admin UI in any context, assuming
-  it lives somewhere underneath a .admin item. This will allow you to take global UI
+  global.less contains the styling for rendering the grandstand UI in any context, assuming
+  it lives somewhere underneath a .grandstand item. This will allow you to take global UI
   elements and apply them externally or internally - whatever you feel like.
 */
-@import url('_buttons');
+@import url('_buttons.less');
 
 body, html {
   min-height:100%;
 }
 
-body.admin {
+body.grandstand {
   background-color:#fff;
   background-image:-moz-linear-gradient(top, #fff, #eee);
   background-image:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
@@ -18,7 +18,7 @@ body.admin {
   padding:0;
 }
 
-.admin {
+.grandstand {
   /* HTML Tags (excluding form input elements) */
   a {
     cursor:pointer;

@@ -1,0 +1,8 @@
+<h2>Edit User</h2>
+<% form_for(@user, :url => grandstand_user_path(@user)) do |form| -%>
+  <%= render :partial => 'form', :locals => {:form => form} %>
+  <div class="toolbar">
+    <%= button 'Save' %>
+    <%= button_link_to('Cancel', grandstand_users_path, :class => 'cancel') %>
+  </div>
+<% end -%>

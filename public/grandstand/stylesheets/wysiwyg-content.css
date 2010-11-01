@@ -1,0 +1,20 @@
+/*
+  wysiwyg-content.css is the stylesheet that is loaded INSIDE OF the WYSIWYG editors' iframe.
+  This only happens if 'iFrame' mode is enabled. It imports what we assume is the stylesheet
+  the user has set up for the application in an attempt to render in a similar font to what
+  is expected in the application.
+*/
+@import url(/stylesheets/screen.css);
+
+body {
+  background-color:#fff !important;
+  color:#000 !important;
+  margin:0;
+  padding:3px;
+  text-align:left !important;
+  width:auto;
+}
+
+img {
+  cursor:pointer;
+}
