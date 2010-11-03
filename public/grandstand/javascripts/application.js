@@ -119,7 +119,7 @@ $(document).ready(function() {
   $('.tabset').tabs();
 
   $('.wysiwyg').dependency('wysiwyg', function() {
-    this.wysiwyg('post');//, this.attr('id') == 'post_body' ? '.post' : null);
+    this.wysiwyg('post', '.post');
   });
 
   $('.source a').live('click', function(event) {

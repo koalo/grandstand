@@ -1,4 +1,8 @@
 <form action="<%= request.fullpath %>" method="POST">
+  <% if @galleries.empty? -%>
+  <h2 class="error icon">No galleries!</h2>
+  <%= button_link_to('Add one now?', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
+  <% else -%>
   <div class="source">
     <div class="header">Galleries</div>
     <% @galleries.each_with_index do |gallery, index| -%>
@@ -16,4 +20,5 @@
       <% end -%>
     </div>
   </div>
+  <% end -%>
 </form>

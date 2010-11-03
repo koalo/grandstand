@@ -6,15 +6,28 @@
 */
 @import url(/stylesheets/screen.css);
 
+html, body {
+  height:100%;
+}
+
 body {
   background-color:#fff !important;
   color:#000 !important;
   margin:0;
-  padding:3px;
+/*  overflow:hidden;*/
+  padding:0;
   text-align:left !important;
   width:auto;
 }
 
 img {
   cursor:pointer;
+}
+
+body .post {
+  padding:0 5px;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
 }

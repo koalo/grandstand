@@ -10,8 +10,6 @@ jQuery.fn.wysiwyg = function(template, rootSelector) {
 };
 
 var Editor = function(textarea, template, rootSelector) {
-  // Load up mustache
-  this.template = template;
   // Find the element we should make editable. Defaults to the BODY element
   // once we've rendered the template.
   this.rootSelector = rootSelector || 'body';
@@ -23,7 +21,7 @@ var Editor = function(textarea, template, rootSelector) {
     {id: 'hyperlink', alt: 'Insert a link'},
     {id: 'unordered_list', alt: 'Insert a bullet list'},
     {id: 'ordered_list', alt: 'Insert a numbered list'},
-    {id: 'gallery', alt: 'Embed a gallery'},
+    // {id: 'gallery', alt: 'Embed a gallery'},
     {id: 'image', alt: 'Embed an image'}
   ];
   this.toolbar = new Editor.Toolbar(this, toolbarItems);
@@ -141,6 +139,7 @@ Editor.prototype = {
     this.iframe.height(this.textarea.height() - this.toolbar.container.height() - 4);
     this.iframe.show();
     this.root = $(this.document).find(this.rootSelector);
+    this.root.css('height', '100%');
     this.root.find('img').live('click', function(event) {
       event.preventDefault();
       event.stopPropagation();
@@ -236,7 +235,9 @@ Editor.prototype = {
     if (this.cover) {
       var cover = this.cover;
       setTimeout(function() {
-        cover.fadeOut();
+        cover.fadeOut(function() {
+          cover.css('background-color', 'transparent');
+        });
       }, 100);
     }
   },

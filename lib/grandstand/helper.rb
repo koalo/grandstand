@@ -38,14 +38,6 @@ module Grandstand
       [options, icon]
     end
 
-    # Returns error_message_on ONLY IF the instance has errors on that field. Just a helpful way of conditionally rendering
-    # errors.
-    def errors_on(instance, method)
-      if (instance = instance_variable_get("@#{instance}")) && !instance.errors[method].empty?
-        error_message_on(instance, method, :css_class => 'error icon')
-      end
-    end
-
     # Adds section-oriented class names if a current_page exists. Useful for styling your site to account for the presence
     # of various content sections; e.g. if a CMS user adds a page with content in the "left" column but not a page with
     # content in the "right" column, you can add:

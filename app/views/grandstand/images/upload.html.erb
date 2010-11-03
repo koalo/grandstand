@@ -1,5 +1,5 @@
 <h2>Upload Multiple Image</h2>
-<%= form_for(Image.new, :html => {:multipart => true}, :url => grandstand_gallery_images_path) do |form| %>
+<%= form_for(Grandstand::Image.new, :html => {:multipart => true}, :url => grandstand_gallery_images_path) do |form| %>
   <%= hidden_field_tag :session_key, request.cookies[Rails.application.config.session_options[:key]] %>
   <div class="field">
     Use the button below to select files to upload. You can hold "shift" to select more than one file.

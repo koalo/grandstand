@@ -27,7 +27,7 @@ class Grandstand::Image < ActiveRecord::Base
     def sizes
       return @sizes if defined? @sizes
       sorted_sizes = ActiveSupport::OrderedHash.new
-      Image.attachment_definitions[:file][:styles].reject {|style, dimensions| style.to_s =~ /^grandstand_/ }.inject({}) do |sizes, style_definition|
+      Grandstand::Image.attachment_definitions[:file][:styles].reject {|style, dimensions| style.to_s =~ /^grandstand_/ }.inject({}) do |sizes, style_definition|
         style, dimensions = style_definition
         width, height = dimensions.gsub(/[^0-9x]/, '').split('x').map(&:to_i)
         width ||= 0

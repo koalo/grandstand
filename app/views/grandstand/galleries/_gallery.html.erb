@@ -4,7 +4,7 @@
   <% if editable -%>
   <div class="header">
     <div class="float-left image icon">
-      <%= truncate(image.file.original_filename, :length => 23) %>
+      <%= truncate(image.file.original_filename, :length => 22) %>
     </div>
     <div class="float-right">
       <%= link_to '', edit_grandstand_gallery_image_path(gallery, image), :class => 'edit icon remote' %><%= link_to '', delete_grandstand_gallery_image_path(gallery, image), :class => 'delete icon remote' %>

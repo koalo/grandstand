@@ -1,6 +1,7 @@
 require 'rails'
 require 'grandstand'
 require 'grandstand/controller'
+require 'grandstand/form_builder'
 require 'grandstand/helper'
 require 'grandstand/session'
 
@@ -10,16 +11,17 @@ module Grandstand
       # Add sessions for Flash file uploads - but this is *not* very secure!
       app.middleware.insert_before(ActionDispatch::ShowExceptions, Grandstand::Session, app.config.session_options[:key] || app.config.session_options['key'])
 
-      # Extend ActionController to have the Grandstand defaults (current_user and its friends)
+      # Extend ActionController and ActionView to have the Grandstand defaults (current_user and its friends)
       ActionController::Base.send :include, Grandstand::Controller
+
+      # Include Grandstand view helpers (page content and its friends)
+      ActionView::Base.send :include, Grandstand::Helper
+      ActionView::Helpers::FormBuilder.send :include, Grandstand::FormBuilder
 
       # Add Paperclip padded_id interpolation for gallery images (pretty URLs)
       Paperclip.interpolates :padded_id do |attachment, style|
         attachment.instance.id.to_s.rjust(6, '0')
       end
-
-      # Include Grandstand view helpers (page content and its friends)
-      ActionView::Base.send :include, Grandstand::Helper
     end
 
     if Rails.env.development?
