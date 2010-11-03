@@ -8,7 +8,7 @@ class Grandstand::Gallery < ActiveRecord::Base
   validates_uniqueness_of :name, :message => 'A gallery with that name already exists'
 
   def cover_image
-    images.first || Image.new
+    images.first || Grandstand::Image.new
   end
 
   # def to_param

@@ -1,7 +1,7 @@
 <% unless params[:preview] == 'yup' -%>
 <h1 class="posts icon"><%= @post.name %></h1>
 <% end -%>
-<%= form_for(@post, :url => grandstand_post_path(@post)) do |form| %>
+<%= form_for(:post, @post, :html => {:method => :put}, :url => grandstand_post_path(@post)) do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
     <%= button 'Save' %>

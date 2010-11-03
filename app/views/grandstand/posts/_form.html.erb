@@ -3,7 +3,7 @@
   <%= javascript_include_tag '/grandstand/javascripts/jquery.js', '/grandstand/javascripts/application.js' %>
   <%= stylesheet_link_tag '/grandstand/stylesheets/external.css' %>
   <% end -%>
-  <% post = Post.new(
+  <% post = Grandstand::Post.new(
     :body => form.text_area(:body, :class => 'wysiwyg'),
     :name => form.text_field(:name, :class => 'oversized text')
   ) -%>

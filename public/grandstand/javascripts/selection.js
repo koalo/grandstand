@@ -242,7 +242,11 @@ Selection.prototype = {
   unwrap: function(tagname) {
     var tags = this.wrappedIn(tagname);
     if (tags) {
-
+      var text = this.range().extractContents();
+      tags.after(text);
+      if (tags.text() == '') {
+        tags.remove();
+      }
     }
   },
   wrap: function(tagname) {

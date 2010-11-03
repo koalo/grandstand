@@ -43,6 +43,6 @@ class Grandstand::UsersController < Grandstand::MainController
 
   protected
   def find_user
-    return grandstand_not_found unless @user = User.where(:id => params[:id]).first
+    return grandstand_not_found unless @user = Grandstand::User.where(:id => params[:id]).first
   end
 end

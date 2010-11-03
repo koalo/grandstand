@@ -17,8 +17,6 @@ var Editor = function(textarea, template, rootSelector) {
   this.rootSelector = rootSelector || 'body';
   this.textarea = $(textarea);
   this.container = $('<div class="wysiwyg"></div>');
-  this.toolbar = $('<div class="toolbar"></div>').hide();
-  // this.container.append(this.toolbar);
   var toolbarItems = [
     {id: 'bold', alt: 'Make text bold'},
     {id: 'italic', alt: 'Make text italic'},
@@ -28,14 +26,8 @@ var Editor = function(textarea, template, rootSelector) {
     {id: 'gallery', alt: 'Embed a gallery'},
     {id: 'image', alt: 'Embed an image'}
   ];
-  var editor = this;
-  // $.each(toolbarItems, function() {
-  //   var button = $('<a class="button" rel="' + this.id + '" title="' + this.alt + '"><span class=" icon ' + this.id.replace('_', '-') + '"></span></a>');
-  //   button.click(function() {
-  //     editor.buttonClick(button);
-  //   });
-  //   editor.toolbar.append(button);
-  // });
+  this.toolbar = new Editor.Toolbar(this, toolbarItems);
+  this.container.append(this.toolbar.container);
   this.iframe = $('<iframe frameBorder="0" id="' + textarea.id + '_editor"></iframe>').hide();
   this.container.height(this.textarea.height() + 6.0);
   this.textarea.height(this.textarea.height() + 5.0);
@@ -43,6 +35,7 @@ var Editor = function(textarea, template, rootSelector) {
   this.startLoading();
   this.textarea.after(this.container);
   this.container.append(this.textarea);
+  var editor = this;
   $.get('/grandstand/templates/' + template, function(response) {
     editor.template = response;
     editor.initialize();
@@ -50,54 +43,6 @@ var Editor = function(textarea, template, rootSelector) {
 };
 
 Editor.prototype = {
-  buttonClick: function(button) {
-    switch(button.attr('rel')) {
-      case 'bold':
-        var selection = this.selection();
-        if (selection.wrappedIn('strong')) {
-          selection.unwrap('strong');
-        } else {
-          selection.wrap('strong');
-        }
-        // this.document.execCommand('bold', false, null);
-      break;
-      case 'italic':
-      break;
-      case 'hyperlink':
-        this.document.execCommand('CreateLink', false, prompt("Please enter an URL:"));
-      break;
-      case 'unordered_list':
-        this.document.execCommand('InsertUnorderedList', false, null);
-      break;
-      case 'ordered_list':
-        this.document.execCommand('InsertOrderedList', false, null);
-      break;
-      case 'gallery':
-        this.dialog('/grandstand/galleries', function() {
-
-        }, function() {
-        
-        });
-      break;
-      case 'image':
-      this.dialog('/grandstand/galleries?image=yup', function(dialog) {
-        var editor = this;
-        dialog.find('.image').click(function(event) {
-          event.preventDefault();
-          var image = $(this).find('img');
-          image = image.clone();
-          image.addClass('left');
-          editor.closeDialog();
-          var imageWrap = $('<div></div>');
-          imageWrap.append(image);
-          editor.selection().insert(imageWrap.html());
-        });
-      }, function() {
-        
-      });
-      break;
-    }
-  },
   closeDialog: function(block) {
     var dialogs = this.container.find('.dialog');
     if (dialogs.length === 0) {
@@ -137,7 +82,7 @@ Editor.prototype = {
     // to `dialog` and display IT.
     var processDialog = function() {
       editor.container.append(dialog.hide());
-      var top = editor.toolbar.outerHeight();
+      var top = editor.toolbar.container.outerHeight();
       dialog.css('height', editor.container.height() - top * 2);
       if (onLoad && typeof(onLoad) == 'function') {
         onLoad.call(editor, dialog);
@@ -192,8 +137,8 @@ Editor.prototype = {
       editor.save();
     });
     this.textarea.hide();
-    this.toolbar.show();
-    this.iframe.height(this.textarea.height() - this.toolbar.height() - 4);
+    this.toolbar.container.show();
+    this.iframe.height(this.textarea.height() - this.toolbar.container.height() - 4);
     this.iframe.show();
     this.root = $(this.document).find(this.rootSelector);
     this.root.find('img').live('click', function(event) {
@@ -201,16 +146,16 @@ Editor.prototype = {
       event.stopPropagation();
       editor.editImage(this);
     });
-    $([this.iframe, this.root, this.document.body]).click(function(event) {
-      console.log(event.target);
-      if ($(event.target).childOf(editor.root)) {
-        return;
-      } else {
-        event.preventDefault();
-        editor.closeDialog();
-        editor.focus(':block:last', -1);
-      }
-    });
+    // $([this.iframe, this.root, this.document.body]).click(function(event) {
+    //   console.log(event.target);
+    //   if ($(event.target).childOf(editor.root)) {
+    //     return;
+    //   } else {
+    //     event.preventDefault();
+    //     editor.closeDialog();
+    //     editor.focus(':block:last', -1);
+    //   }
+    // });
     $([this.document, document]).keyup(function(event) {
       if (event.keyCode == 27) {
         editor.closeDialog();
@@ -226,12 +171,24 @@ Editor.prototype = {
       if (pasting) {
         var before = $('<div></div>').html(pasting.shift()).html(), after = $('<div></div>').html(pasting.shift()).html();
         console.log(after);
+      } else {
+        var selection = editor.selection();
+        if (selection.wrappedIn('strong')) {
+          editor.toolbar.on('bold');
+        } else {
+          editor.toolbar.off('bold');
+        }
+        if (selection.wrappedIn('em')) {
+          editor.toolbar.on('italic');
+        } else {
+          editor.toolbar.off('italic');
+        }
       }
       pasting = false;
     }).keydown(function(event) {
+      var selection = editor.selection();
       if (event.keyCode == 13) {
         // If a user hits "Enter", we'll hijack the event and clean it up just a little bit
-        var selection = editor.selection();
         if (event.shiftKey) {
           // If the user held shift and pressed enter, split it with a line break
           selection.insert('<br />', true);
@@ -255,7 +212,7 @@ Editor.prototype = {
         // set the pasting variable to the HTML content before and after the current selection.
         // Once the content is pasted, we'll parse out WHAT was pasted in, clean it up, and viola!
         // Better content.
-        pasting = [editor.selection().beforeAll(), editor.selection().afterAll()];
+        pasting = [selection.beforeAll(), selection.afterAll()];
       }
     });
     this.root.attr('contentEditable', 'true').css('outline', '0');
@@ -328,6 +285,76 @@ Editor.prototype = {
     this.document.close();
   }
 };
+
+Editor.Toolbar = function(editor, buttons) {
+  this.editor = editor;
+  this.container = $('<div class="toolbar"></div>').hide();
+  var toolbar = this;
+  $.each(buttons, function() {
+    var button = $('<a class="button" rel="' + this.id + '" title="' + this.alt + '"><span class=" icon ' + this.id.replace('_', '-') + '"></span></a>');
+    button.click(function() {
+      toolbar.buttonClick(button);
+    });
+    toolbar.container.append(button);
+  });
+}
+
+Editor.Toolbar.prototype = {
+  buttonClick: function(button) {
+    switch(button.attr('rel')) {
+      case 'bold':
+        var selection = this.editor.selection();
+        if (selection.wrappedIn('strong')) {
+          selection.unwrap('strong');
+        } else {
+          selection.wrap('strong');
+        }
+        // this.document.execCommand('bold', false, null);
+      break;
+      case 'italic':
+      break;
+      case 'hyperlink':
+        this.editor.document.execCommand('CreateLink', false, prompt("Please enter an URL:"));
+      break;
+      case 'unordered_list':
+        this.editor.document.execCommand('InsertUnorderedList', false, null);
+      break;
+      case 'ordered_list':
+        this.editor.document.execCommand('InsertOrderedList', false, null);
+      break;
+      case 'gallery':
+        this.editor.dialog('/grandstand/galleries', function() {
+
+        }, function() {
+        
+        });
+      break;
+      case 'image':
+      this.editor.dialog('/grandstand/galleries?image=yup', function(dialog) {
+        var editor = this.editor;
+        dialog.find('.image').click(function(event) {
+          event.preventDefault();
+          var image = $(this).find('img');
+          image = image.clone();
+          image.addClass('left');
+          editor.closeDialog();
+          var imageWrap = $('<div></div>');
+          imageWrap.append(image);
+          editor.selection().insert(imageWrap.html());
+        });
+      }, function() {
+        
+      });
+      break;
+    }
+  },
+  off: function(buttonName) {
+    this.container.find('a.button[rel=' + buttonName + ']').removeClass('button-hover');
+  },
+  on: function(buttonName) {
+    this.container.find('a.button[rel=' + buttonName + ']').addClass('button-hover');
+  }
+}
 
 jQuery.fn.childOf = function(a){
   a = (typeof a=='string')?$(a):a;

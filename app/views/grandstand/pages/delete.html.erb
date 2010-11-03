@@ -1,5 +1,5 @@
 <h2>Are you sure you want to do this?</h2>
-<% form_for(@page, :html => {:method => :delete}, :url => grandstand_page_path(@page)) do %>
+<% form_for(:page, @page, :html => {:method => :delete}, :url => grandstand_page_path(@page)) do %>
   <div class="field">You cannot undo this once it's done! This page will be dead. Not undead, like a zombie. Just plain dead.</div>
   <div class="toolbar">
     <%= button('Delete') %>

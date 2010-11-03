@@ -1,5 +1,5 @@
 <h2>Upload Image</h2>
-<% form_for(@image, :html => {:multipart => true}, :url => grandstand_gallery_images_path) do |form| %>
+<% form_for(:image, @image, :html => {:multipart => true}, :url => grandstand_gallery_images_path) do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
     <%= button 'Add Image' %>
