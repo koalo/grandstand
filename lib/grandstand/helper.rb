@@ -1,4 +1,7 @@
 module Grandstand
+  # The Grandstand::Helper module will give you a number of ways to render page content
+  # in your layouts, thus simplifying (considerably!) the headaches you may experience
+  # with optional columns, etc.
   module Helper
     # Adds section-oriented class names if a current_page exists. Useful for styling your site to account for the presence
     # of various content sections; e.g. if a CMS user adds a page with content in the "left" column but not a page with

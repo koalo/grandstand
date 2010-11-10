@@ -1,0 +1,122 @@
+#grandstand .styled-toolbar {
+  background-color: #a7a7a7;
+  background-image: -moz-linear-gradient(top, #cacaca, #a7a7a7);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#cacaca), to(#a7a7a7));
+  overflow: hidden;
+  padding: 5px;
+}
+#grandstand .button-default {
+  background-color: #ececec;
+  background-image: -moz-linear-gradient(top, #f4f4f4, #ececec);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f4f4), to(#ececec));
+  border: 1px solid #d4d4d4;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 16px;
+  margin: 0;
+  overflow: hidden;
+  padding: 4px 10px;
+  text-decoration: none;
+  text-shadow: #ffffff 0 1px 0;
+  vertical-align: baseline;
+  vertical-align: middle;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+#grandstand .button-hover {
+  background-color: #3072b3;
+  background-image: -moz-linear-gradient(top, #599bdc, #3072b3);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#599bdc), to(#3072b3));
+  border-color: #518cc6;
+  border-bottom-color: #2a65a0;
+  color: #ffffff;
+  text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0;
+}
+#grandstand .button-active {
+  background-color: #599bdc;
+  background-image: -moz-linear-gradient(top, #3072b3, #599bdc);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3072b3), to(#599bdc));
+  border-bottom-color: #518cc6;
+  border-top-color: #2a65a0;
+  -moz-box-shadow: inset rgba(0, 0, 0, 0.2) 0 0 1px;
+  -webkit-box-shadow: inset rgba(0, 0, 0, 0.2) 0 0 1px;
+}
+#grandstand .button-grey {
+  background-color: #333333;
+  background-image: -moz-linear-gradient(top, #333333, #444444);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#333333));
+  border-color: #000000;
+  color: #ffffff;
+  text-shadow: #000000 0 -1px 0;
+}
+#grandstand .button-grey-hover {
+  background-color: #444444;
+  background-image: -moz-linear-gradient(top, #333333, #444444);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), to(#444444));
+}
+#grandstand .button-grey-active {
+  -moz-box-shadow: inset #000000 0 0px 1px;
+  -webkit-box-shadow: inset #000000 0 0px 1px;
+}
+.grandstand .wysiwyg {
+  border: 1px solid #888888;
+  overflow: hidden;
+  position: relative;
+  -webkit-border-radius: 3px;
+}
+.grandstand .wysiwyg .toolbar {
+  background-color: #a7a7a7;
+  background-image: -moz-linear-gradient(top, #cacaca, #a7a7a7);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#cacaca), to(#a7a7a7));
+  overflow: hidden;
+  padding: 5px;
+  border-bottom: 1px solid #444444;
+  position: relative;
+}
+.grandstand .wysiwyg .toolbar .button {
+  line-height: 0;
+  padding: 3px;
+}
+.grandstand .wysiwyg .toolbar .button .icon { background-position: center top; }
+.grandstand .wysiwyg .toolbar .button .icon.bold { background-image: url(../images/icons/editor/bold.png); }
+.grandstand .wysiwyg .toolbar .button .icon.italic { background-image: url(../images/icons/editor/italic.png); }
+.grandstand .wysiwyg .toolbar .button .icon.ordered-list { background-image: url(../images/icons/editor/ordered-list.png); }
+.grandstand .wysiwyg .toolbar .button .icon.unordered-list { background-image: url(../images/icons/editor/unordered-list.png); }
+.grandstand .wysiwyg .toolbar .button:hover .icon { background-position: center bottom; }
+.grandstand .wysiwyg iframe {
+  background: #ffffff url(../images/background-input.gif) repeat-x;
+  display: block;
+  height: 400px;
+  width: 100%;
+  -webkit-border-bottom-left-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+}
+.grandstand .wysiwyg textarea { border-width: 0; }
+.grandstand .wysiwyg .cover {
+  background-color: #ffffff;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  -webkit-border-radius: 3px;
+}
+.grandstand .wysiwyg .loading {
+  background: rgba(0, 0, 0, 0.7) url(../images/spinner-dark.gif) center center no-repeat;
+  height: 50px;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  z-index: 2;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.grandstand .icon.image-center { background-image: url(../images/icons/editor/image-center.png); }
+.grandstand .icon.image-left { background-image: url(../images/icons/editor/image-left.png); }
+.grandstand .icon.image-right { background-image: url(../images/icons/editor/image-right.png); }

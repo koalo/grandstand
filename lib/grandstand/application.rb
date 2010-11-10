@@ -6,7 +6,7 @@ require 'grandstand/helper'
 require 'grandstand/session'
 
 module Grandstand
-  class Application < Rails::Engine
+  class Application < Rails::Engine #:nodoc: all
     initializer 'grandstand.initialize', :after => :load_application_initializers do |app|
       # Add sessions for Flash file uploads - but this is *not* very secure!
       app.middleware.insert_before(ActionDispatch::ShowExceptions, Grandstand::Session, app.config.session_options[:key] || app.config.session_options['key'])
@@ -27,15 +27,6 @@ module Grandstand
       end
       Paperclip.interpolates :padded_id do |attachment, style|
         attachment.instance.id.to_s.rjust(6, '0')
-      end
-    end
-
-    if Rails.env.development?
-      # In development mode, Grandstand will serve static assets. Be sure to move them to your app's
-      # actual public directory when you're ready to deploy using rake something something
-      # TODO: Find actual rake task
-      initializer 'grandstand.development_mode', :after => :load_application_initializers do |app|
-        # app.middleware.insert_after ::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public"
       end
     end
   end

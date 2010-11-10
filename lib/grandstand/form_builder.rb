@@ -1,5 +1,5 @@
 module Grandstand
-  module FormBuilder
+  module FormBuilder #:nodoc: all
     def errors_on(*fields)
       if @object
         errors = []

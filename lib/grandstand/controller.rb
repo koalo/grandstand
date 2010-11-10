@@ -1,6 +1,12 @@
 module Grandstand
+  # The Grandstand::Controller mixin will add a number of ActionController and ActionView
+  # helper methods that will allow you to require a user and other cool stuff like that.
+  # 
+  # It's not the most functional beast you've ever seen, but Grandstand aims to be as
+  # unobtrusive as possible. It doesn't, for example, do anything to mess with how
+  # Rails is supposed to work.
   module Controller
-    def self.included(base)
+    def self.included(base) #:nodoc:
       base.helper_method :current_page, :current_user, :return_path
     end
 

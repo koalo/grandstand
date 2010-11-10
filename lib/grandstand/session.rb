@@ -1,5 +1,5 @@
 module Grandstand
-  class Session
+  class Session #:nodoc: all
     def initialize(app, session_key = '_session_id')
       @app = app
       @session_key = session_key
