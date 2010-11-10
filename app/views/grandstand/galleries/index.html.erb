@@ -3,8 +3,9 @@
 <% end %>
 <% if @galleries.empty? -%>
 <div class="inset">
-  <h2>You haven't set up any galleries!</h2>
-  <b class="grey">Get started:</b> <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
+  <h2 class="">You haven't set up any galleries!</h2>
+  <%= image_tag('/grandstand/images/galleries-empty.png') %>
+  <br /><b class="grey">Get started:</b> <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
 </div>
 <% else -%>
 <div class="galleries sortable">

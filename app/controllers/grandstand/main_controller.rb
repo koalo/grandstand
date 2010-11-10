@@ -20,7 +20,7 @@ class Grandstand::MainController < ApplicationController
     request.xhr? ? 'grandstand_xhr' : 'grandstand'
   end
 
-  def grandstand_not_found
+  def grandstand_not_found(options = {})
     options = {:layout => 'minimal', :status => 404, :template => 'shared/404'}.merge(options)
     render options
     false
