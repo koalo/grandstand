@@ -1,6 +1,9 @@
 class Grandstand::MainController < ApplicationController
   skip_before_filter :find_page
   before_filter :require_user
+  if Rails.env.production?
+    before_filter :require_ssl
+  end
   before_filter :set_return_path, :only => [:index, :show]
 
   layout :grandstand_layout
@@ -32,5 +35,12 @@ class Grandstand::MainController < ApplicationController
 
   def require_no_user
     redirect_to return_path || grandstand_root_path if current_user
+  end
+
+  def require_ssl
+    if !request.ssl?
+      new_url = Grandstand.routing[:domain] ? url_for(:protocol => 'https', :host => Grandstand.routing[:domain]) : url_for(:protocol => 'https')
+      redirect_to new_url
+    end
   end
 end

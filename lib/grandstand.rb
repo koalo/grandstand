@@ -19,9 +19,9 @@ module Grandstand
 
     def routing_options
       routing_options = {}
-      if Grandstand.routing[:domain]
-        routing_options.merge!(:path => '', :constraints => {:domain => Grandstand.routing[:domain]})
-      end
+      # if Grandstand.routing[:domain]
+      #   routing_options.merge!(:path => '', :constraints => {:domain => Grandstand.routing[:domain]})
+      # end
       routing_options
     end
 
