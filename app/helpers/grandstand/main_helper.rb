@@ -7,8 +7,10 @@ module Grandstand::MainHelper
   # 
   #   <button class="button blue"><span class="inner"><span>Save Changes</span></span></button>
   def button(*args)
-    options, icon = button_options(args.extract_options! || {})
-    content_tag(:button, options) { content_tag(:span, :class => icon ? "#{icon} icon" : nil) { args.shift } }
+    label = args.shift
+    options = {:name => 'submit', :value => label}.merge(args.extract_options! || {})
+    options, icon = button_options(options)
+    content_tag(:button, options) { content_tag(:span, :class => icon ? "#{icon} icon" : nil) { label } }
   end
 
   # Similar to button, but generates a link instead of a button element. Useful for providing

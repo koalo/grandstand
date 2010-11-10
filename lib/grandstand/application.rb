@@ -35,7 +35,7 @@ module Grandstand
       # actual public directory when you're ready to deploy using rake something something
       # TODO: Find actual rake task
       initializer 'grandstand.development_mode', :after => :load_application_initializers do |app|
-        app.middleware.insert_after ::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public"
+        # app.middleware.insert_after ::ActionDispatch::Static, ::ActionDispatch::Static, "#{root}/public"
       end
     end
   end

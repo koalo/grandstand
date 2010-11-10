@@ -52,10 +52,10 @@ Rails::Application.routes.draw do |map|
     end
   end
 
-  if Rails.env.development?
-    require 'grandstand/stylesheets_controller'
-    namespace :grandstand do
-      get 'stylesheets/:name.css', :to => 'stylesheets#show'
-    end
-  end
+  # if Rails.env.development?
+  #   require 'grandstand/stylesheets_controller'
+  #   namespace :grandstand do
+  #     get 'stylesheets/:name.css', :to => 'stylesheets#show'
+  #   end
+  # end
 end
