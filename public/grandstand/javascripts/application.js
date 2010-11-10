@@ -32,31 +32,13 @@ $(document).ready(function() {
     $.get('/grandstand/expand?add=' + (add ? 'yup' : 'nope') + '&section=' + link.attr('rel'));
   });
 
-  $('#cover').click(function() {
-    $(this).fadeOut(200);
-    var pulldown = $('#pulldown');
-    if (pulldown.css('display') != 'none') {
-      pulldown.animate({top: -(pulldown.height())}, 300, function() {
-        pulldown.hide();
-      });
-    }
-  });
-
-  $('#pulldown a.cancel').live('click', function(event) {
-    event.preventDefault();
-    $('#cover').click();
+  $('form').submit(function() {
+    $(this).find('button').attr('enabled', false);
   });
 
   $('.remote').live('click', function(event) {
-    $('#cover').fadeIn(100);
     event.preventDefault();
-    $.get(this.href, function(response) {
-      var pulldown = $('#pulldown');
-      pulldown.html(response);
-      if (pulldown.css('display') == 'none') {
-        pulldown.css('top', -(pulldown.height())).show().animate({top: 0}, 300);
-      }
-    });
+    Dialog.show(this.href);
   });
 
   $('.galleries.sortable').sortable({
@@ -64,7 +46,7 @@ $(document).ready(function() {
     items: '.container',
     stop: function(event, ui) {
       $.post('/grandstand/galleries/reorder', $(this).sortable('serialize'), function() {
-        Flash.show('notice', "Your changes have been saved!");
+        Notifications.show('notice', 'Your changes have been saved!');
       });
     }
   });
@@ -74,7 +56,7 @@ $(document).ready(function() {
     items: '.container',
     stop: function(event, ui) {
       $.post(window.location.toString() + '/images/reorder', $(this).sortable('serialize'), function() {
-        Flash.show('notice', "Your changes have been saved!");
+        Notifications.show('notice', 'Your changes have been saved!');
       });
     }
   });
@@ -116,6 +98,10 @@ $(document).ready(function() {
     }
   });
 
+  $('#cover').click(function(event) {
+    Dialog.hide();
+  });
+
   $('.tabset').tabs();
 
   $('.wysiwyg').dependency('wysiwyg', function() {
@@ -137,8 +123,119 @@ $(document).ready(function() {
     $('#' + link.attr('rel')).show();    
   });
 
-  Flash.hideAll();
+  Notifications.hide();
+
 });
+
+var Dialog = {
+  hide: function(close) {
+    Dialog.unbind();
+    if (!close) {
+      $('#cover').fadeOut(200);
+    }
+    var dialog = $('#dialog');
+    if (dialog.css('display') != 'none') {
+      dialog.animate({top: -(dialog.height())}, 300, function() {
+        if (close) {
+          close();
+        }
+        dialog.hide().html('');
+      });
+    } else {
+      close();
+    }
+  },
+  keydown: function(event) {
+    if (event.keyCode == 27) {
+      $('#dialog a.cancel').addClass('active');
+    } else if (event.keyCode == 13) {
+      $('#dialog .default').addClass('active');
+    }
+  },
+  keyup: function(event) {
+    if (event.keyCode == 27) {
+      $('#dialog a.cancel').removeClass('active');
+      Dialog.hide();
+    } else if (event.keyCode == 13) {
+      $('#dialog .default').removeClass('active');
+      if ($(event.target).parents('form').length === 0 && !$(event.target).is('form')) {
+        Dialog.submit();
+      }
+    }
+  },
+  show: function(content, options) {
+    var cover = $('#cover');
+    cover.fadeIn(100);
+    var options = options || {};
+    var dialog = $('#dialog');
+    dialog.removeClass();
+    if (options.style) {
+      dialog.addClass(options.style);
+    }
+    var process = function(content) {
+      dialog.html(content);
+      dialog.find('a.cancel').click(function(event) {
+        event.preventDefault();
+        Dialog.hide();
+      });
+      if (options.load) {
+        options.load(dialog);
+      }
+      $(document).keydown(Dialog.keydown).keyup(Dialog.keyup);
+      if (options.submit) {
+        dialog.find('form').submit(function(event) {
+          return options.submit.call(this, event);
+        });
+      }
+      if (dialog.css('display') == 'none') {
+        dialog.css('top', -(dialog.height())).show().animate({top: 0}, 300, function() {
+          cover.removeClass('loading');
+          if (options.complete) {
+            options.complete.call(this);
+          }
+        });
+      } else {
+        cover.removeClass('loading');
+      }
+    }
+    if (typeof(content) == 'string' && content.toString().match(/^http(s)*:\/\//) || content.toString().match(/^\//)) {
+      cover.addClass('loading');
+      $.get(content, function(response) {
+        process(response);
+      });
+    } else {
+      process(content);
+    }
+  },
+  submit: function() {
+    Dialog.unbind();
+    $('#dialog form').submit();
+  },
+  unbind: function() {
+    $(document).unbind('keydown', Dialog.keydown).unbind('keyup', Dialog.keyup);
+  }
+};
+
+var Notifications = {
+  hide: function() {
+    $('.notification').each(function() {
+      var notification = $(this);
+      setTimeout(function() {
+        notification.fadeOut(200);
+      }, 2000);
+    });
+  },
+  show: function(type, message) {
+    var notification = $('.notification.' + type);
+    if (notification.length === 0) {
+      notification = $('<div class="notification ' + type + '"><div class="inner"></div></div>').hide();
+      $(document.body).prepend(notification);
+    }
+    notification.find('.inner').html(message);
+    Notifications.hide();
+    return notification.fadeIn(200);
+  }
+};
 
 var Upload = {
   // Every file is done; move on with our lives
@@ -147,7 +244,7 @@ var Upload = {
   },
   // Called when someone clicks a "cancel this event" button
   cancel: function(event) {
-    
+    alert('cancelling the thingy...');
   },
   // Called AFTER we've successfully cancelled, but we initiate the cancelling.
   cancelled: function() {
@@ -183,7 +280,7 @@ var Upload = {
   fileCompleted: function(event) {
     var row = Upload.rowFor(event.target.name);
     row.find('.progress-bar').addClass('complete');
-    row.find('.delete').removeClass('delete').addClass('okay');
+    row.find('.delete').removeClass('delete').removeClass('processing').addClass('okay');
   },
   fileError: function(event) {
     var row = Upload.rowFor(event.target.name)
@@ -191,8 +288,17 @@ var Upload = {
     row.find('.icon').removeClass('delete').addClass('error');
   },
   fileProgress: function(event) {
-    var progress = Upload.rowFor(event.target.name).find('.progress');
-    progress.animate({width: (event.bytesLoaded / event.bytesTotal * 100).toString() + '%'}, 50);
+    var row = Upload.rowFor(event.target.name);
+    var progress = row.find('.progress');
+    var percent = event.bytesLoaded / event.bytesTotal * 100;
+    progress.animate({width: percent.toString() + '%'}, 50);
+    if (percent == 100) {
+      var icon = row.find('.icon');
+      if (!icon.hasClass('processing')) {
+        progress.parent().addClass('complete');
+        row.find('.delete').addClass('processing');
+      }
+    }
   },
   fileStarted: function(event) {
 
@@ -206,26 +312,5 @@ var Upload = {
   stripe: function() {
     Upload.list.find('tbody').find('tr').removeClass('odd');
     Upload.list.find('tbody').find('tr:odd').addClass('odd');
-  }
-};
-
-var Flash = {
-  hideAll: function() {
-    $('.flash').each(function() {
-      var flash = $(this);
-      setTimeout(function() {
-        flash.fadeOut(200);
-      }, 2000);
-    });
-  },
-  show: function(type, message) {
-    var flash = $('.flash.' + type);
-    if (flash.length === 0) {
-      flash = $('<div class="flash ' + type + '"><div class="inner"></div></div>').hide();
-      $(document.body).prepend(flash);
-    }
-    flash.find('.inner').html(message);
-    Flash.hideAll();
-    return flash.fadeIn(200);
   }
 };

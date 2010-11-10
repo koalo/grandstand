@@ -2,7 +2,11 @@
   <%= button_link_to('Upload An Image', new_grandstand_gallery_image_path(@gallery), :class => 'remote', :icon => 'upload') %>
   <%= button_link_to('Upload Multiple', upload_grandstand_gallery_images_path(@gallery), :class => 'remote', :icon => 'upload') %>
 <% end %>
-<h1 class="galleries icon"><%= @gallery.name %> <%= button_link_to('Edit', edit_grandstand_gallery_path(@gallery), :class => 'remote', :icon => 'edit') %></h1>
+<h1 class="galleries icon">
+  <%= @gallery.name %>
+  <%= button_link_to('Edit', edit_grandstand_gallery_path(@gallery), :class => 'remote', :icon => 'edit') %>
+  <%= button_link_to('Delete', delete_grandstand_gallery_path(@gallery), :class => 'remote', :icon => 'delete') %>
+</h1>
 <% if @gallery.images.empty? -%>
 <div class="inset">
   <h2>You haven't uploaded any images!</h2>

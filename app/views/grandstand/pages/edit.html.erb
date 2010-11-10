@@ -1,5 +1,5 @@
 <h1 class="pages icon"><%= @page.name %></h1>
-<% form_for(:page, @page, :url => grandstand_page_path(@page)) do |form| -%>
+<% form_for(@page, :as => :page, :url => grandstand_page_path(@page)) do |form| -%>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
     <%= button 'Save' %>

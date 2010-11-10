@@ -8,89 +8,101 @@
   overrides you may have.
 */
 @import url('_buttons');
-@import url('_dialogs');
 
-.grandstand .wysiwyg {
-  border:1px solid #888;
-  overflow:hidden;
-  position:relative;
-  -webkit-border-radius:3px;
-
-  .toolbar {
-    #grandstand > .styled-toolbar;
-    border-bottom:1px solid #444;
+.grandstand {
+  .wysiwyg {
+    border:1px solid #888;
+    overflow:hidden;
     position:relative;
-    z-index:4;
-
-    .button {
-      line-height:0;
-      padding:3px;
-
-      .icon {
-        background-position:center top;
-      }
-
-      .icon.bold {
-        background-image:url(../images/icons/editor/bold.png);
-      }
-
-      .icon.italic {
-        background-image:url(../images/icons/editor/italic.png);
-      }
-
-      .icon.ordered-list {
-        background-image:url(../images/icons/editor/ordered-list.png);
-      }
-
-      .icon.unordered-list {
-        background-image:url(../images/icons/editor/unordered-list.png);
-      }
-    }
-
-    .button:hover .icon {
-      background-position:center bottom;
-    }
-  }
-
-  iframe {
-    background:#fff url(../images/background-input.gif) repeat-x;
-  /*  border-bottom:1px solid #ddd;
-    border-left:1px solid #c3c3c3;
-    border-right:1px solid #c3c3c3;
-    border-top:1px solid #7d7d7d;*/
-    display:block;
-    height:400px;
-    width:100%;
-    -webkit-border-bottom-left-radius:3px;
-    -webkit-border-bottom-right-radius:3px;
-  }
-
-  textarea {
-    border-width:0;
-  /*  padding:0;*/
-  }
-
-  .cover {
-    background-color:#fff;
-    height:100%;
-    left:0;
-    position:absolute;
-    top:0;
-    width:100%;
-    z-index:1;
     -webkit-border-radius:3px;
+
+    .toolbar {
+      #grandstand > .styled-toolbar;
+      border-bottom:1px solid #444;
+      position:relative;
+
+      .button {
+        line-height:0;
+        padding:3px;
+
+        .icon {
+          background-position:center top;
+        }
+
+        .icon.bold {
+          background-image:url(../images/icons/editor/bold.png);
+        }
+
+        .icon.italic {
+          background-image:url(../images/icons/editor/italic.png);
+        }
+
+        .icon.ordered-list {
+          background-image:url(../images/icons/editor/ordered-list.png);
+        }
+
+        .icon.unordered-list {
+          background-image:url(../images/icons/editor/unordered-list.png);
+        }
+      }
+
+      .button:hover .icon {
+        background-position:center bottom;
+      }
+    }
+
+    iframe {
+      background:#fff url(../images/background-input.gif) repeat-x;
+    /*  border-bottom:1px solid #ddd;
+      border-left:1px solid #c3c3c3;
+      border-right:1px solid #c3c3c3;
+      border-top:1px solid #7d7d7d;*/
+      display:block;
+      height:400px;
+      width:100%;
+      -webkit-border-bottom-left-radius:3px;
+      -webkit-border-bottom-right-radius:3px;
+    }
+
+    textarea {
+      border-width:0;
+    /*  padding:0;*/
+    }
+
+    .cover {
+      background-color:#fff;
+      height:100%;
+      left:0;
+      position:absolute;
+      top:0;
+      width:100%;
+      z-index:1;
+      -webkit-border-radius:3px;
+    }
+
+    .loading {
+      background:rgba(0, 0, 0, 0.7) url(../images/spinner-dark.gif) center center no-repeat;
+      height:50px;
+      left:50%;
+      margin:-25px 0 0 -25px;
+      position:absolute;
+      top:50%;
+      width:50px;
+      z-index:2;
+      -moz-border-radius:5px;
+      -webkit-border-radius:5px;
+    }
   }
 
-  .loading {
-    background:rgba(0, 0, 0, 0.7) url(../images/spinner-dark.gif) center center no-repeat;
-    height:50px;
-    left:50%;
-    margin:-25px 0 0 -25px;
-    position:absolute;
-    top:50%;
-    width:50px;
-    z-index:2;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
+  .icon.image-center {
+    background-image:url(../images/icons/editor/image-center.png);
+  }
+
+  .icon.image-left {
+    background-image:url(../images/icons/editor/image-left.png);
+  }
+
+  .icon.image-right {
+    background-image:url(../images/icons/editor/image-right.png);
   }
 }

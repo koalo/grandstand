@@ -1,5 +1,5 @@
 <h2>Edit Image</h2>
-<% form_for(:image, @image, :html => {:multipart => true}, :url => grandstand_gallery_image_path(@gallery, @image)) do |form| %>
+<% form_for(@image, :as => :image, :html => {:multipart => true}, :url => grandstand_gallery_image_path(@gallery, @image)) do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
     <%= button 'Save' %>

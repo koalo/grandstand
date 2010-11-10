@@ -1,0 +1,33 @@
+<h2>Edit Embedded Image</h2>
+<form action="<%= request.fullpath %>" class="pad" method="POST">
+  <div class="field">
+    <img alt="<%= @image.caption %>" class="float-left" src="<%= @image.url(:grandstand_medium) %>" style="margin:0 10px 10px 0;" />
+    <div class="label">Alignment</div>
+    <label for="align_left">
+      <%= radio_button_tag(:align, :left, params[:align] ? params[:align] == 'left' : true) %>
+      <span class="image-left icon">Inline with text, left</span>
+    </label>
+    <label for="align_center">
+      <%= radio_button_tag(:align, :center, params[:align] == 'center') %>
+      <span class="image-center icon">Break text, centered</span>
+    </label>
+    <label for="align_right">
+      <%= radio_button_tag(:align, :right, params[:align] == 'right') %>
+      <span class="image-right icon">Inline with text, right</span>
+    </label>
+  </div>
+  <div class="field">
+    <div class="label">Size</div>
+    <% Grandstand::Image.sizes.each do |size, options| -%>
+    <label for="size_<%= size %>">
+      <%= radio_button_tag(:size, @image.url(size), params[:size] == size.to_s || size == Grandstand::Image.sizes.keys.first, :id => "size_#{size}") %>
+      <%= size.to_s.titleize %>
+      (<%= options[:description] %>)
+    </label>
+    <% end -%>
+  </div>
+  <div class="toolbar">
+    <%= button 'Update', :default => true %>
+    <%= button_link_to('Cancel', return_path, :class => 'cancel') %>
+  </div>
+</form>

@@ -1,0 +1,9 @@
+<%= javascript_include_tag '/grandstand/javascripts/jquery.js', '/grandstand/javascripts/preview.js' %>
+<%= form_for(@post, :as => :post, :html => {:class => 'grandstand'}) do |form| %>
+  <%= form.text_field(:name, :class => 'oversized text') %>
+  <%= raw Mustache.render(Grandstand::Template.post, Grandstand::Post.new(:body => form.text_area(:body, :class => 'wysiwyg')).as_json) %>
+  <div class="toolbar">
+    <%= button 'Save' %>
+    <%= button_link_to('Cancel', return_path || grandstand_posts_path, :class => 'cancel') %>
+  </div>
+<% end =%>

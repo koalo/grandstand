@@ -1,16 +1,3 @@
-<% if params[:preview] == 'yup' %>
-  <% content_for :head do -%>
-  <%= javascript_include_tag '/grandstand/javascripts/jquery.js', '/grandstand/javascripts/application.js' %>
-  <%= stylesheet_link_tag '/grandstand/stylesheets/external.css' %>
-  <% end -%>
-  <% post = Grandstand::Post.new(
-    :body => form.text_area(:body, :class => 'wysiwyg'),
-    :name => form.text_field(:name, :class => 'oversized text')
-  ) -%>
-  <div class="grandstand">
-    <%= raw Mustache.render(Grandstand::Template.post, post.as_json) %>
-  </div>
-<% else -%>
 <%= render :partial => 'left' %>
 <% content_for :head do -%>
 <%= stylesheet_link_tag '/grandstand/stylesheets/wysiwyg.css' %>
@@ -25,5 +12,4 @@
     <%= form.label :body %>
     <%= form.text_area :body, :class => 'wysiwyg' %>
   </div>
-<% end -%>
 <% end -%>

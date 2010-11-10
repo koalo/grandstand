@@ -1,3 +1,3 @@
 <h1><%= @post.name %></h1>
-<div class="meta">posted <%= @post.created_at.strftime('%m.%d.%Y').gsub(/^0/, '').gsub(/\.0/, '.') %></div>
-<%= raw Mustache.render(Grandstand::Template.post, @post.as_json) %>
+<div class="meta">posted <%= @post.posted_at.strftime('%m.%d.%Y').gsub(/^0/, '').gsub(/\.0/, '.') %></div>
+<%= raw @post.to_html %>

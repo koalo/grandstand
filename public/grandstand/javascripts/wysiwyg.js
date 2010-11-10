@@ -41,81 +41,6 @@ var Editor = function(textarea, template, rootSelector) {
 };
 
 Editor.prototype = {
-  closeDialog: function(block) {
-    var dialogs = this.container.find('.dialog');
-    if (dialogs.length === 0) {
-      if (block) {
-        block.call(this);
-      }
-    } else {
-      var editor = this;
-      dialogs.animate({top: -(dialogs.height())}, 300, function() {
-        $(this).remove();
-        if (block) {
-          block.call(editor);
-        }
-      });
-    }
-  },
-  // Loads up a dialog box using AJAX contents, and animates it in over top of the editor.
-  // 
-  // `onLoad` will be called when the contents is loaded, and `this` will be the editor
-  // instance, and the only argument passed will be the dialog DIV. This allows you to
-  // define behavior for the dialog's controls.
-  // 
-  // `onSubmit` is called when the user submits the form. `this` will be the editor instance
-  // (like onLoad), and the only argument passed will be an Object corresponding to the form
-  // elements. So a form like:
-  // 
-  // "image[caption]=I am an image Caption&image[align]=left" will be:
-  // 
-  // {image: {caption: "I am an image", align: "left"}}
-  // 
-  dialog: function(url, onLoad, onSubmit) {
-    var editor = this;
-    // Setup a dialog container
-    var dialog = $('<div class="dialog"></div>');
-    // Setup a method to wrap the dialog. If the plugin passes a string, we'll render a
-    // dialog with the contents at that URL. If it passes an object, we'll just append it
-    // to `dialog` and display IT.
-    var processDialog = function() {
-      editor.container.append(dialog.hide());
-      var top = editor.toolbar.container.outerHeight();
-      dialog.css('height', editor.container.height() - top * 2);
-      if (onLoad && typeof(onLoad) == 'function') {
-        onLoad.call(editor, dialog);
-      }
-      dialog.css('top', -(dialog.height()) + top).show().animate({top: top}, 300);
-      dialog.find('form').submit(function(event) {
-        event.preventDefault();
-        if (onSubmit && typeof(onSubmit) == 'function') {
-          onSubmit.call(editor, $(this).serialize());
-        }
-      });
-    };
-    if (typeof(url) == 'string') {
-      editor.startLoading();
-      $.get(url, function(response) {
-        response = $(response);
-        dialog.append(response);
-        editor.closeDialog(function() {
-          editor.stopLoading();
-          processDialog.call(editor);
-        });
-      });
-    } else {
-      dialog.append(url);
-      editor.closeDialog(processDialog);
-    }
-  },
-  editImage: function(image) {
-    image = $(image);
-    var form = $('<form class="pad"></form>');
-    form.append(image.clone());
-    this.dialog(form, false, function() {
-      alert('okay!');
-    });
-  },
   focus: function(selector, offset) {
     var selection = this.selection();
     selection.select(selector || ':block', offset || 0);
@@ -143,103 +68,102 @@ Editor.prototype = {
     this.root.find('img').live('click', function(event) {
       event.preventDefault();
       event.stopPropagation();
-      editor.editImage(this);
+      var img = $(this);
+      var ids = this.src.match(/\d\d\d\d\d\d/ig);
+      var url = '/grandstand/galleries/' + ids[0].replace(/^0+/, '') + '/images/' + ids[1].replace(/^0+/, '');
+      url += '?align=' + this.className + '&size=' + this.src.substring(this.src.lastIndexOf(ids[1]) + 7, this.src.lastIndexOf('.'));
+      Dialog.show(url, {
+        style: 'medium',
+        submit: function(event) {
+          event.preventDefault();
+          // Grab the right form, thanks a lot IE...
+          var form = $(event.target);
+          if (!form.is('form')) {
+            form = form.parents('form');
+          }
+          img.removeClass().addClass(form.find('input[name=align]:checked').val());
+          img.load(function() {
+            img.attr('height', img.height());
+            img.attr('width', img.width());
+          });
+          img.attr('src', form.find('input[name=size]:checked').val());
+          img.removeAttr('height');
+          img.removeAttr('width');
+          Dialog.hide();
+        }
+      });
     });
-    // $([this.iframe, this.root, this.document.body]).click(function(event) {
-    //   console.log(event.target);
-    //   if ($(event.target).childOf(editor.root)) {
-    //     return;
-    //   } else {
-    //     event.preventDefault();
-    //     editor.closeDialog();
-    //     editor.focus(':block:last', -1);
-    //   }
+    // $([this.document, document]).keyup(function(event) {
+    //   editor.selection().normalize();
     // });
-    $([this.document, document]).keyup(function(event) {
-      if (event.keyCode == 27) {
-        editor.closeDialog();
-        editor.focus();
-      } else {
-        editor.selection().normalize();
+    var pasting, selection;
+    this.root.keyup(function(event) {
+      selection = editor.selection();
+      if (jQuery.browser.mozilla && editor.root.find('p').length === 0) {
+        // Ensure Firefox is using paragraphs and not line breaks when I
+        // insert content
+        if (editor.root.text().replace(/\s+/ig, '') == '') {
+          editor.root.html('<p></p>');
+          selection.select('p');
+        } else {
+          selection.selectAll();
+          selection.wrap('p');
+          selection.select('p', 1);
+        }
       }
-    });
-    var pasting;
-    this.root.keyup(function() {
       clearTimeout(editor.timeout);
       editor.timeout = setTimeout(function() { editor.save(); }, 100);
-      if (pasting) {
-        var before = $('<div></div>').html(pasting.shift()).html(), after = $('<div></div>').html(pasting.shift()).html();
-        console.log(after);
+      if (selection.wrappedIn('strong')) {
+        editor.toolbar.on('bold');
       } else {
-        var selection = editor.selection();
-        if (selection.wrappedIn('strong')) {
-          editor.toolbar.on('bold');
-        } else {
-          editor.toolbar.off('bold');
-        }
-        if (selection.wrappedIn('em')) {
-          editor.toolbar.on('italic');
-        } else {
-          editor.toolbar.off('italic');
-        }
+        editor.toolbar.off('bold');
       }
-      pasting = false;
-    }).keydown(function(event) {
-      var selection = editor.selection();
-      if (event.keyCode == 13) {
-        // If a user hits "Enter", we'll hijack the event and clean it up just a little bit
-        if (event.shiftKey) {
-          // If the user held shift and pressed enter, split it with a line break
-          selection.insert('<br />', true);
-        } else {
-          // If the selection is inside of a list, let the browser do its magic. In
-          // other words: don't interrupt anything; just leave well enough alone.
-          if (selection.wrappedIn('li, ol, ul')) {
-            return;
-          }
-          // If we're not inside of an li / ol / ul, default behavior is to split the
-          // selected content into two paragraphs, one with the content before the 
-          // selection, and another with the content after it.
-          selection.split('p');
+      if (selection.wrappedIn('em')) {
+        editor.toolbar.on('italic');
+      } else {
+        editor.toolbar.off('italic');
+      }
+    }).bind('paste', function(event) {
+      var clipboard;
+      if (event.originalEvent.clipboardData) {
+        clipboard = event.originalEvent.clipboardData;
+      } else if (typeof(Components) != 'undefined' && Components.interfaces.nsIClipboard) {
+        // return true;
+        // 
+        // TODO: Handle Firefox's ABYSMAL onPaste support with signed JavaScript or some equally pointless bullshit.
+        // Hey, Firefox! If someone *pastes*, let me see what they *pasted*, you fucking bastard!
+        // 
+        // var clip = Components.classes["@mozilla.org/widget/clipboard;1"].getService(Components.interfaces.nsIClipboard);
+        // // if (!clip) return false;
+        // 
+        // var trans = Components.classes["@mozilla.org/widget/transferable;1"].createInstance(Components.interfaces.nsITransferable);
+        // // if (!trans) return false;
+        // trans.addDataFlavor("text/unicode");
+        // 
+        // clip.getData(trans, clip.kGlobalClipboard);
+        // 
+        // var str = new Object();
+        // var strLength = new Object();
+        // trans.getTransferData("text/unicode", str, strLength);
+      } else if (window.clipboardData) {
+        clipboard = window.clipboardData;
+      }
+      if (clipboard) {
+        selection = editor.selection();
+        var text = clipboard.getData('text/plain').toString().split(/(\n|\r){2,}/igm);
+        if (text.length > 0) {
+          selection.replace(text.shift().clean());
+          $.each(text.reverse(), function() {
+            selection.endBlock().after('<p>' + this.clean() + '</p>');
+          });
+          return false;
         }
-
-        event.preventDefault();
-        event.stopPropagation();
-
-      } else if (event.keyCode == 86 && (event.metaKey || event.ctrlKey) && !pasting) {
-        // If the user is pasting, we'll prep keyUp for the past event. This means we'll
-        // set the pasting variable to the HTML content before and after the current selection.
-        // Once the content is pasted, we'll parse out WHAT was pasted in, clean it up, and viola!
-        // Better content.
-        pasting = [selection.beforeAll(), selection.afterAll()];
       }
     });
     this.root.attr('contentEditable', 'true').css('outline', '0');
     // this.document.body.contentEditable = 'true';
     this.focus();
     this.stopLoading();
-  },
-  // Called when the editor is loaded up for the first time and off finding dependencies / etc.
-  // Just puts a white cover over the textarea and waits for everything to load before saying,
-  // "okay, now you can edit"
-  startLoading: function() {
-    if (!this.cover) {
-      this.cover = $('<div class="cover"></div>');
-      this.loading = $('<div class="loading"></div>');
-      this.cover.append(this.loading);
-      this.container.append(this.cover);
-    }
-    this.cover.show();
-  },
-  stopLoading: function() {
-    if (this.cover) {
-      var cover = this.cover;
-      setTimeout(function() {
-        cover.fadeOut(function() {
-          cover.css('background-color', 'transparent');
-        });
-      }, 100);
-    }
   },
   save: function() {
     var html = this.root.html();
@@ -268,12 +192,35 @@ Editor.prototype = {
 
     this.textarea.val(html);
   },
+  // Called when the editor is loaded up for the first time and off finding dependencies / etc.
+  // Just puts a white cover over the textarea and waits for everything to load before saying,
+  // "okay, now you can edit"
+  startLoading: function() {
+    if (!this.cover) {
+      this.cover = $('<div class="cover"></div>');
+      this.loading = $('<div class="loading"></div>');
+      this.cover.append(this.loading);
+      this.container.append(this.cover);
+    }
+    this.cover.show();
+  },
   selection: function() {
     return $(this.window).selection(this.rootSelector);
   },
+  stopLoading: function() {
+    if (this.cover) {
+      var cover = this.cover;
+      this.cover = false;
+      setTimeout(function() {
+        cover.fadeOut(function() {
+          cover.remove();
+        });
+      }, 100);
+    }
+  },
   write: function(content) {
     if (content == '') {
-      content = '<p>&nbsp;</p>';
+      content = '<p><br /></p>';
     }
     var rendered = Mustache.to_html(this.template, {body: content});
     var html = '<html><head><link href="/grandstand/stylesheets/wysiwyg-content.css" rel="stylesheet" type="text/css" /></head>';
@@ -324,28 +271,29 @@ Editor.Toolbar.prototype = {
         this.editor.document.execCommand('InsertOrderedList', false, null);
       break;
       case 'gallery':
-        this.editor.dialog('/grandstand/galleries', function() {
-
-        }, function() {
-        
+        Dialog.show('/grandstand/galleries', {
+          load: function() {
+            
+          }
         });
       break;
       case 'image':
-      this.editor.dialog('/grandstand/galleries?image=yup', function(dialog) {
         var editor = this.editor;
-        dialog.find('.image').click(function(event) {
-          event.preventDefault();
-          var image = $(this).find('img');
-          image = image.clone();
-          image.addClass('left');
-          editor.closeDialog();
-          var imageWrap = $('<div></div>');
-          imageWrap.append(image);
-          editor.selection().insert(imageWrap.html());
+        Dialog.show('/grandstand/galleries', {
+          style: 'large',
+          load: function(dialog) {
+            dialog.find('.image').click(function(event) {
+              event.preventDefault();
+              var image = $(this).find('img');
+              image = image.clone();
+              image.addClass('left');
+              editor.selection().insert(image);
+              Dialog.hide(function() {
+                image.click();
+              });
+            });
+          }
         });
-      }, function() {
-        
-      });
       break;
     }
   },

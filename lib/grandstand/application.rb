@@ -18,7 +18,13 @@ module Grandstand
       ActionView::Base.send :include, Grandstand::Helper
       ActionView::Helpers::FormBuilder.send :include, Grandstand::FormBuilder
 
-      # Add Paperclip padded_id interpolation for gallery images (pretty URLs)
+      # Add Paperclip padded_id and dimensions interpolations
+      Paperclip.interpolates :dimensions do |attachment, style|
+        attachment.options[:styles][style].gsub(/[^\dx]/, '')
+      end
+      Paperclip.interpolates :gallery_id do |attachment, style|
+        attachment.instance.gallery_id.to_s.rjust(6, '0')
+      end
       Paperclip.interpolates :padded_id do |attachment, style|
         attachment.instance.id.to_s.rjust(6, '0')
       end

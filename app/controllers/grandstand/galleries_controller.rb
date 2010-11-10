@@ -21,11 +21,7 @@ class Grandstand::GalleriesController < Grandstand::MainController
   def index
     @galleries = Grandstand::Gallery.all
     if request.xhr?
-      if params.has_key?(:image)
-        render :editor_with_images
-      else
-        render :editor
-      end
+      render :editor
     end
   end
 

@@ -30,10 +30,7 @@ module Grandstand
     end
 
     def image_sizes
-      @images_sizes ||= {
-        :icon => '75x75#',
-        :page => '541x' 
-      }
+      @images_sizes ||= {}
     end
 
     def image_sizes=(new_image_sizes)

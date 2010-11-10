@@ -1,6 +1,6 @@
 <%= render :partial => 'left' %>
 <h2>Are you sure you want to do this?</h2>
-<% form_for(:post, @post, :html => {:method => :delete}, :url => grandstand_post_path(@post)) do %>
+<% form_for(@post, :as => :post, :html => {:method => :delete}, :url => grandstand_post_path(@post)) do %>
   <div class="field">You cannot undo this once it's done! This post, and all the creative ideas therein, will be gone forever.</div>
   <div class="toolbar">
     <%= button('Delete') %>

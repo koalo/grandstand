@@ -1,7 +1,5 @@
-<% unless params[:preview] == 'yup' -%>
 <h1 class="posts icon">New Blog Post</h1>
-<% end -%>
-<% form_for(:post, @post, :url => grandstand_posts_path) do |form| -%>
+<% form_for(@post, :as => :post, :url => grandstand_posts_path) do |form| -%>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
     <%= button 'Add Post' %>

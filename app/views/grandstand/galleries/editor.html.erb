@@ -1,13 +1,33 @@
-<form action="<%= request.fullpath %>" method="POST">
+<% if @galleries.empty? -%>
+<h2 class="error icon">Please Upload Images to a Gallery</h2>
+<div class="center field">
+  <img alt="No Galleries" src="/grandstand/images/galleries-empty.png" />
+</div>
+<div class="toolbar">
+  <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
+  <%= button_link_to('Close', return_path, :class => 'cancel')%>
+</div>
+<% else -%>
+<form action="<%= request.fullpath %>" class="two-pane" method="POST">
   <div class="source">
-    <span class="header">Galleries</span>
-    <% @galleries.each do |gallery| -%>
-    <a href="<%= grandstand_gallery_path(gallery) %>">
+    <div class="header">Galleries</div>
+    <% @galleries.each_with_index do |gallery, index| -%>
+    <a<%= raw ' class="active"' if index.zero? %> href="<%= grandstand_gallery_path(gallery) %>" rel="gallery-<%= gallery.to_param %>">
       <span class="icon" style="background-image:url(<%= gallery.cover_image.file.url(:grandstand_icon) %>);"><%= gallery.name %></span>
     </a>
     <% end -%>
   </div>
   <div class="destination">
-    
+    <div class="scrollable">
+      <% @galleries.each_with_index do |gallery, index| -%>
+      <div id="gallery-<%= gallery.to_param %>"<%= raw ' style="display:none;"' unless index.zero? %>>
+        <%= render :partial => 'gallery', :locals => {:gallery => gallery} %>
+      </div>
+      <% end -%>
+    </div>
+  </div>
+  <div class="toolbar">
+    <%= button_link_to('Close', return_path, :class => 'cancel') %>
   </div>
 </form>
+<% end -%>

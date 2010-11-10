@@ -27,9 +27,6 @@ class Grandstand::ImagesController < Grandstand::MainController
     @image = @gallery.images.find(params[:id])
   end
 
-  def editor
-  end
-
   def index
     redirect_to grandstand_gallery_path(@gallery)
   end

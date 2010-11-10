@@ -19,7 +19,7 @@ Rails::Application.routes.draw do |map|
         get :delete
       end
 
-      resources :images, :except => [:show] do
+      resources :images do
         collection do
           post :reorder
           get :upload

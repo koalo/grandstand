@@ -222,8 +222,8 @@ String.prototype.clean = function() {
     9830: "diams",
     34: "quot",
     38: "amp",
-    60: "lt",
-    62: "gt",
+    // 60: "lt",
+    // 62: "gt",
     338: "OElig",
     339: "oelig",
     352: "Scaron",
@@ -255,10 +255,11 @@ String.prototype.clean = function() {
   };
   return this.replace(/[^\x00-\x7F]|["'<>&]/igm, function(character) {
     var entity = entities[character.charCodeAt(0)];
-    if (!entity) {
-      entity = 'foo';
-      alert('can\'t encode weirdness');
+    if (entity) {
+      console.log('replacing ' + character + ' with &' + entity + ';');
+      return '&' + entity + ';';
+    } else {
+      return character;
     }
-    return '&' + entity + ';';
   });
 };

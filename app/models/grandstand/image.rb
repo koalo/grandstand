@@ -4,8 +4,9 @@ class Grandstand::Image < ActiveRecord::Base
   default_scope order('position, id')
 
   has_attached_file :file,
-    :default_url => "http://dummyimage.com/:dimensions",
-    :path => '/images/:padded_id-:style.:extension',
+    :convert_options => Hash[*(Grandstand.image_sizes.keys + [:grandstand_icon, :grandstand_medium]).map {|key| [key, '-gravity north']}.flatten],
+    :default_url => "http://dummyimage.com/:dimensions/fff/888&text=No+Images!",
+    :path => '/images/:gallery_id/:padded_id-:style.:extension',
     :styles => {
       :grandstand_icon => '16x16#',
       :grandstand_medium => '200x200#'

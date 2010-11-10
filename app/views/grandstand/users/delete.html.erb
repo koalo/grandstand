@@ -1,5 +1,5 @@
 <h2>Are you sure you want to do this?</h2>
-<% form_for(:user, @user, :html => {:method => :delete}, :url => grandstand_user_path(@user)) do %>
+<% form_for(@user, :as => :user, :html => {:method => :delete}, :url => grandstand_user_path(@user)) do %>
   <div class="field">
     You cannot undo this once it's done! This user will be gone, and so will their posts and galleries. Be careful! This could have dire effects.
   </div>

@@ -69,6 +69,58 @@ Selection.prototype = {
     beforeAllRange.setEnd(range.startContainer, range.startOffset);
     return beforeAllRange.cloneContents();
   },
+  afterRange: function() {
+    return this._data('afterRange', function() {
+      var endNode = this.endNode();
+
+      var afterRange = this.document.createRange();
+      afterRange.setStart(endNode[0], this.data['endOffset']);
+      afterRange.setEnd(endNode[0], (endNode[0].wholeText || endNode.html()).length);
+      return afterRange;
+    });
+  },
+  beforeRange: function() {
+    return this._data('beforeRange', function() {
+      var startNode = this.startNode();
+
+      var beforeRange = this.document.createRange();
+      beforeRange.setStart(startNode[0], 0);
+      beforeRange.setEnd(startNode[0], this.data['startOffset']);
+
+      return beforeRange;
+    });
+  },
+  endNode: function() {
+    return this._data('endNode', function() {
+      var beforeRange = this.document.createRange();
+      beforeRange.setStart(this.selection.anchorNode, this.selection.anchorOffset);
+      beforeRange.collapse(true);
+
+      var afterRange = this.document.createRange();
+      afterRange.setStart(this.selection.focusNode, this.selection.focusOffset);
+      afterRange.collapse(true);
+
+      var ltr = beforeRange.compareBoundaryPoints(beforeRange.START_TO_END, afterRange) < 0;
+
+      var endNode = $(ltr ? this.selection.focusNode : this.selection.anchorNode);
+      this.data['startNode'] = $(ltr ? this.selection.anchorNode : this.selection.focusNode);
+      this.data['startOffset'] = ltr ? this.selection.anchorOffset : this.selection.focusOffset;
+      this.data['endOffset'] = ltr ? this.selection.focusOffset : this.selection.anchorOffset;
+
+      return endNode;
+
+    });
+  },
+  endBlock: function() {
+    return this._data('endBlock', function() {
+      var endNode = this.endNode();
+      var endBlock = $(endNode.parents(':block:not(body, html, ' + this.rootSelector + '):first')[0] || endNode);
+      if (endBlock.length > 0) {
+        endBlock[0].normalize();
+      }
+      return endBlock;
+    });
+  },
   // Inserts some content into the selection. Really, it just replaces the
   // current selection with the content. Coolness.
   insert: function(content) {
@@ -116,7 +168,10 @@ Selection.prototype = {
     if (typeof(selector) == 'object') {
       element = $(selector);
     } else {
-      element = this.root.find(selector + ':first');
+      if (!selector.match(':')) {
+        selector = selector + ':first';
+      }
+      element = this.root.find(selector);
     }
     if (!offset) {
       offset = 0;
@@ -127,13 +182,27 @@ Selection.prototype = {
         this.selection = this.window.getSelection ? this.window.getSelection() : this.document.selection;
       }
       var range = this.document.createRange();
-      range.selectNodeContents(element);
-      range.collapse(true);
+      if (offset > 0) {
+        range.setStart(element, offset);
+        range.setEnd(element, offset);
+      } else {
+        range.selectNodeContents(element);
+        range.collapse(true);
+      }
       this.selection.removeAllRanges();
       this.selection.addRange(range);
     } else {
       this.root.focus();
     }
+  },
+  selectAll: function() {
+    if (!this.selection) {
+      this.selection = this.window.getSelection ? this.window.getSelection() : this.document.selection;
+    }
+    var range = this.document.createRange();
+    range.selectNodeContents(this.root[0]);
+    this.selection.removeAllRanges();
+    this.selection.addRange(range);
   },
   split: function(tagname) {
     // Default to a new paragraph
@@ -160,59 +229,6 @@ Selection.prototype = {
     after.deleteContents();
     startBlock[0].normalize();
     endBlock[0].normalize();
-  },
-  afterRange: function() {
-    return this._data('afterRange', function() {
-      var endNode = this.endNode();
-
-      var afterRange = this.document.createRange();
-      afterRange.setStart(endNode[0], this.data['endOffset']);
-      afterRange.setEnd(endNode[0], (endNode[0].wholeText || endNode.html()).length);
-
-      return afterRange;
-    });
-  },
-  beforeRange: function() {
-    return this._data('beforeRange', function() {
-      var startNode = this.startNode();
-
-      var beforeRange = this.document.createRange();
-      beforeRange.setStart(startNode[0], 0);
-      beforeRange.setEnd(startNode[0], this.data['startOffset']);
-
-      return beforeRange;
-    });
-  },
-  endNode: function() {
-    return this._data('endNode', function() {
-      var beforeRange = this.document.createRange();
-      beforeRange.setStart(this.selection.anchorNode, this.selection.anchorOffset);
-      beforeRange.collapse(true);
-
-      var afterRange = this.document.createRange();
-      afterRange.setStart(this.selection.focusNode, this.selection.focusOffset);
-      afterRange.collapse(true);
-
-      var ltr = beforeRange.compareBoundaryPoints(beforeRange.START_TO_END, afterRange) < 0;
-
-      var endNode = $(ltr ? this.selection.focusNode : this.selection.anchorNode);
-      this.data['startNode'] = $(ltr ? this.selection.anchorNode : this.selection.focusNode);
-      this.data['startOffset'] = ltr ? this.selection.anchorOffset : this.selection.focusOffset;
-      this.data['endOffset'] = ltr ? this.selection.focusOffset : this.selection.anchorOffset;
-
-      return endNode;
-
-    });
-  },
-  endBlock: function() {
-    return this._data('endBlock', function() {
-      var endNode = this.endNode();
-      var endBlock = endNode.parents(':block:not(body, html, ' + this.rootSelector + '):first') || endNode;
-      if (endBlock.length > 0) {
-        endBlock[0].normalize();
-      }
-      return endBlock;
-    });
   },
   startBlock: function() {
     return this._data('startBlock', function() {

@@ -15,7 +15,7 @@
       <% else -%>
       <td><i>none</i></td>
       <% end -%>
-      <td><%= post.created_at.to_date %>
+      <td><%= post.posted_at.to_date %>
       <td class="actions">
         <%= button_link_to 'Edit', edit_grandstand_post_path(post), :icon => :edit %>
         <%= button_link_to 'Delete', delete_grandstand_post_path(post), :icon => :delete %>
