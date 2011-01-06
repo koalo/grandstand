@@ -1,0 +1,142 @@
+/* Dialog styling */
+#cover {
+  background-color:#000;
+  height:100%;
+  left:0;
+  opacity:0.6;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:3;
+}
+
+#cover.loading {
+  background-image:url(../images/spinner-dark.gif);
+  background-position:center center;
+  background-repeat:no-repeat;
+}
+
+#dialog {
+  left:50%;
+  margin-left:-200px;
+  position:fixed;
+  top:0;
+  width:400px;
+  z-index:3;
+  -moz-border-radius-bottomleft:5px;
+  -moz-border-radius-bottomright:5px;
+  -webkit-border-bottom-left-radius:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -moz-box-shadow:#333 0 1px 2px;
+  -webkit-box-shadow:#333 0 1px 2px;
+}
+
+#dialog .source {
+  float:left;
+  height:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+  width:200px;
+}
+
+#dialog .source .header {
+  background-color:transparent !important;
+  background-image:none !important;
+  border-width:0 !important;
+  color:#505d81;
+  font-weight:bold;
+  padding:10px 10px 5px 10px;
+  text-shadow:#f1f5f8 0 1px 0;
+  text-transform:uppercase;
+}
+
+#dialog .source a {
+  border-top:1px solid #d9dfe8;
+  color:#000;
+  display:block;
+  padding:5px 5px 5px 20px;
+  text-decoration:none;
+}
+
+#dialog .source a.active {
+  background:-webkit-gradient(linear, left top, left bottom, from(#63a4e2), to(#0066c0));
+  border-top:1px solid #4691d6;
+  color:#fff;
+  text-shadow:#000 0 1px 0;
+}
+
+#dialog .toolbar {
+  /*  #grandstand > .styled-toolbar;*/
+  border-top:1px solid #888;
+  clear:both;
+  text-align:right;
+  -moz-border-radius-bottomleft:5px;
+  -moz-border-radius-bottomright:5px;
+  -webkit-border-bottom-left-radius:5px;
+  -webkit-border-bottom-right-radius:5px;
+}
+
+#dialog .toolbar .button {
+  border-color:#888;
+}
+
+#dialog h2 {
+  background:#fafafa;
+  border-bottom:1px solid #ddd;
+  color:#555;
+  font-size:10pt;
+  margin:0 !important;
+  padding:5px;
+  text-shadow:#fff 0 1px 0;
+}
+
+#dialog form {
+  border-top:1px solid #fff;
+  margin:0;
+}
+
+#dialog form.two-pane {
+  background:#d9dfe8;
+  border-top-width:0;
+  -moz-border-radius-bottomleft:5px;
+  -moz-border-radius-bottomright:5px;
+  -webkit-border-bottom-left-radius:5px;
+  -webkit-border-bottom-right-radius:5px;
+}
+
+#dialog .destination {
+  background-color:#fff;
+  border-left:1px solid #aaa;
+  height:100%;
+  margin-left:200px;
+}
+
+#dialog .field {
+  background:#f0f0f0;
+  padding:10px;
+}
+
+#dialog .image {
+  cursor:pointer;
+}
+
+#dialog .scrollable {
+  /*height:100%;*/
+  overflow-x:hidden;
+  overflow-y:auto;
+  padding:10px 0;
+  width:100%;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+
+#dialog.large {
+  margin-left:-450px;
+  width:900px;
+}
+
+#dialog.medium {
+  margin-left:-300px;
+  width:600px;
+}

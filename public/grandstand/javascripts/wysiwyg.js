@@ -4,12 +4,12 @@ require('mustache');
 jQuery.fn.wysiwyg = function(template, rootSelector) {
   var editor;
   this.each(function() {
-    editor = new Editor(this, template, rootSelector);
+    editor = new WYSIWYG(this, template, rootSelector);
   });
   return editor;
 };
 
-var Editor = function(textarea, template, rootSelector) {
+var WYSIWYG = function(textarea, template, rootSelector) {
   // Find the element we should make editable. Defaults to the BODY element
   // once we've rendered the template.
   this.rootSelector = rootSelector || 'body';
@@ -24,7 +24,7 @@ var Editor = function(textarea, template, rootSelector) {
     // {id: 'gallery', alt: 'Embed a gallery'},
     {id: 'image', alt: 'Embed an image'}
   ];
-  this.toolbar = new Editor.Toolbar(this, toolbarItems);
+  this.toolbar = new WYSIWYG.Toolbar(this, toolbarItems);
   this.container.append(this.toolbar.container);
   this.iframe = $('<iframe frameBorder="0" id="' + textarea.id + '_editor"></iframe>').hide();
   this.container.height(this.textarea.height() + 6.0);
@@ -40,7 +40,7 @@ var Editor = function(textarea, template, rootSelector) {
   });
 };
 
-Editor.prototype = {
+WYSIWYG.prototype = {
   focus: function(selector, offset) {
     var selection = this.selection();
     selection.select(selector || ':block', offset || 0);
@@ -99,9 +99,8 @@ Editor.prototype = {
     var pasting, selection;
     this.root.keyup(function(event) {
       selection = editor.selection();
-      if (jQuery.browser.mozilla && editor.root.find('p').length === 0) {
-        // Ensure Firefox is using paragraphs and not line breaks when I
-        // insert content
+      if (editor.root.find('p').length === 0) {
+        // Ensure we're using paragraphs and not line breaks when writing
         if (editor.root.text().replace(/\s+/ig, '') == '') {
           editor.root.html('<p></p>');
           selection.select('p');
@@ -234,7 +233,7 @@ Editor.prototype = {
   }
 };
 
-Editor.Toolbar = function(editor, buttons) {
+WYSIWYG.Toolbar = function(editor, buttons) {
   this.editor = editor;
   this.container = $('<div class="toolbar"></div>').hide();
   var toolbar = this;
@@ -247,7 +246,7 @@ Editor.Toolbar = function(editor, buttons) {
   });
 }
 
-Editor.Toolbar.prototype = {
+WYSIWYG.Toolbar.prototype = {
   buttonClick: function(button) {
     switch(button.attr('rel')) {
       case 'bold':

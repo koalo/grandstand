@@ -1,20 +1,29 @@
-#logo {
-  left: 50%;
-  margin-left: -190px;
-  position: absolute;
-  top: 100px;
+@import url('forms.css');
+@import url('global.css');
+
+body.grandstand {
+  background-color:#eee;
+  background-image:none;
 }
+
+#logo {
+  left:50%;
+  margin-left:-190px;
+  position:absolute;
+  top:100px;
+}
+
 #login {
-  border-bottom: 1px solid #ffffff;
-  left: 50%;
-  margin: 0 0 0 -200px;
-  position: absolute;
-  padding: 2em;
-  top: 135px;
-  width: 400px;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  border-bottom:1px solid #ffffff;
+  left:50%;
+  margin:0 0 0 -200px;
+  position:absolute;
+  padding:2em;
+  top:135px;
+  width:400px;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
 }

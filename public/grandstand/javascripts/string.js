@@ -256,7 +256,6 @@ String.prototype.clean = function() {
   return this.replace(/[^\x00-\x7F]|["'<>&]/igm, function(character) {
     var entity = entities[character.charCodeAt(0)];
     if (entity) {
-      console.log('replacing ' + character + ' with &' + entity + ';');
       return '&' + entity + ';';
     } else {
       return character;

@@ -1,0 +1,83 @@
+/*.grandstand .styled-toolbar  {
+  background-color:#a7a7a7;
+  background-image:-moz-linear-gradient(top, #cacaca, #a7a7a7);
+  background-image:-webkit-gradient(linear, left top, left bottom, from(#cacaca), to(#a7a7a7));
+  overflow:hidden;
+  padding:5px; 
+}
+*/
+
+.grandstand .button {
+  background-color:#ededed;
+  background-image:-moz-linear-gradient(center bottom, rgb(131,215,108) 0%, rgb(159,237,138) 100%);
+  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #f7f7f7), color-stop(0.03, #ededed), color-stop(1, #c4c4c4));
+  border:1px solid #aaa;
+  border-bottom-color:#949494;
+  border-top-color:#bdbdbd;
+  color:#4f4f4f !important;
+  cursor:pointer;
+  display:inline-block;
+  height:24px;
+  line-height:24px;
+  font:bold 12px Arial, sans-serif;
+  padding:0 10px;
+  text-decoration:none !important;
+  text-shadow:rgba(255, 255, 255, 0.7) 0 1px 0;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+  -webkit-box-shadow:rgba(255, 255, 255, 0.7) 0 1px 0;
+  -webkit-transition:-webkit-box-shadow 0.1s linear;
+}
+
+.grandstand .button:focus:not(:disabled)/*, .grandstand .button:hover:not(:disabled) */{
+  outline:0;
+  -moz-box-shadow:#bbb 0 0 5px;
+  -webkit-box-shadow:#bbb 0 0 5px;
+}
+
+.grandstand .button:active:not(:disabled) {
+  background-image:-moz-linear-gradient(center bottom, rgb(131,215,108) 100%, rgb(159,237,138) 0%);
+  background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, #f7f7f7), color-stop(0.03, #ededed), color-stop(1, #c4c4c4));
+  border-bottom-color:#bdbdbd;
+  border-top-color:#949494;
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+}
+
+.grandstand .button:disabled {
+  cursor:default;
+  opacity:0.5;
+}
+
+.grandstand .button.default {
+    background-color:#b9e0f5;
+    background-image:-moz-linear-gradient(center bottom, rgb(131,215,108) 0%, rgb(159,237,138) 100%);
+    background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #ddf0fb), color-stop(0.03, #b9e0f5), color-stop(1, #83b0ca));
+    border:1px solid #6e94a9;
+    border-bottom-color:#587e93;
+    border-top-color:#8ab0c6;
+    color:#1c4257 !important;
+}
+
+.grandstand .button.default:hover:not(:disabled) {
+/*  -moz-box-shadow:#89b6d0 0 0 5px;
+  -webkit-box-shadow:#89b6d0 0 0 5px;*/
+/*  -moz-box-shadow:#0088ff 0 0 5px;
+  -webkit-box-shadow:#0088ff 0 0 4px;*/
+}
+
+.grandstand .button.default:active:not(:disabled) {
+  background-image:-moz-gradient(linear, left bottom, left top, color-stop(0, #ddf0fb), color-stop(0.03, #b9e0f5), color-stop(1, #83b0ca));
+  background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, #ddf0fb), color-stop(0.03, #b9e0f5), color-stop(1, #83b0ca));
+  border:1px solid #6e94a9;
+  border-bottom-color:#8ab0c6;
+  border-top-color:#587e93;
+}
+
+.grandstand .button.has-icon {
+  padding-left:5px;
+}
+
+.grandstand .button .icon {
+	background-position:left center;
+}

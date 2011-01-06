@@ -1,0 +1,94 @@
+/* Grandstand Forms */
+.grandstand select {
+  padding:2px;
+}
+
+.grandstand select.error {
+  border:1px solid #f00;
+}
+
+.grandstand select.multiple {
+  min-height:55px;
+  min-width:150px;
+}
+
+.grandstand select.small {
+  width:50px;
+}
+
+.grandstand textarea {
+  height:50px;
+}
+
+.grandstand textarea.small {
+  height:32px;
+  width:180px;
+}
+
+.grandstand textarea.wysiwyg {
+  display:block;
+  height:400px;
+  width:100%;
+}
+
+.grandstand textarea.error, .grandstand input.error {
+  border:1px solid #f00 !important;
+}
+
+.grandstand input.text, .grandstand textarea {
+  background:#fff url(../images/background-input.gif) repeat-x;
+  border-bottom:1px solid #ddd;
+  border-left:1px solid #c3c3c3;
+  border-right:1px solid #c3c3c3;
+  border-top:1px solid #7d7d7d;
+  padding:3px;
+  width:370px;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+
+.grandstand input.text.medium {
+  width:180px;
+}
+
+.grandstand input.text.oversized {
+  /*  display:block;*/
+  font-size:18px;
+  width:100%;
+}
+
+.grandstand input.half.text.oversized {
+  width:183px;
+}
+
+.grandstand input.text.small {
+  width:94px;
+}
+
+.grandstand input.text.tiny {
+  width:50px;
+}
+
+.grandstand input.replace.unedited, .grandstand textarea.replace.unedited {
+  color:#777 !important;
+}
+
+/* Progress Bar UI */
+.grandstand .progress-bar {
+  background:url(../images/background-progress-bar.png) repeat-x left center;
+  margin:0;
+  padding:0 !important;
+  width:200px;
+}
+
+.grandstand .progress-bar .progress {
+  background:url(../images/background-progress.gif) repeat-x;
+  height:11px;
+  width:0;
+}
+
+.grandstand .progress-bar.complete .progress {
+  background-image:url(../images/background-progress-complete.gif);
+  width:100%;
+}
