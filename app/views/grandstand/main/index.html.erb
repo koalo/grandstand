@@ -1,10 +1,8 @@
-<div class="inset galleries icon">
-  <% if (count = Grandstand::Gallery.count).zero? -%>
-  <h2>You haven't set up any galleries!</h2>
-  <b class="grey">Get started:</b> <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote') %>
-  <% else %>
-  <h2>You have <%= pluralize(count, 'gallery') %></h2>
-  <%= button_link_to('Visit', grandstand_galleries_path) %>
-  <%= button_link_to('Add Another One', new_grandstand_gallery_path, :class => 'grey remote') %>
-  <% end -%>
+<h2>Welcome to <%= Grandstand.app_name %>!</h2>
+<div class="pad">
+  <h3>This is your dashboard.</h3>
+  <p>From here, you can edit things like <%= link_to 'pages', grandstand_pages_path, :class => 'pages icon' %>,
+  <%= link_to 'blog posts', grandstand_posts_path, :class => 'posts icon' %>,
+  <%= link_to 'photo galleries', grandstand_galleries_path, :class => 'galleries icon' %>,
+  and more!
 </div>

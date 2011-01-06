@@ -2,7 +2,7 @@
 <% form_for(@gallery, :as => :gallery, :url => grandstand_gallery_path(@gallery)) do |form| -%>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
-    <%= button 'Save' %>
+    <%= button 'Save', :default => true %>
     <%= button_link_to('Cancel', grandstand_galleries_path, :class => 'cancel') %>
   </div>
 <% end -%>

@@ -1,5 +1,7 @@
-<%= render :partial => 'left' %>
-<h1 class="users icon">Users</h1>
+<% content_for :title do %>
+  <%= button_link_to('Add a User', new_grandstand_user_path, :class => 'remote', :icon => 'add') %>
+<% end %>
+<h2>Users</h2>
 <table class="grid">
   <thead>
     <tr>

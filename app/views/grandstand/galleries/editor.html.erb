@@ -1,10 +1,10 @@
 <% if @galleries.empty? -%>
-<h2 class="error icon">Please Upload Images to a Gallery</h2>
+<h2>Please Upload Images to a Gallery</h2>
 <div class="center field">
-  <img alt="No Galleries" src="/grandstand/images/galleries-empty.png" />
+  <%= image_tag('/grandstand/images/icons/galleries-empty.png', :alt => 'No Galleries') %>
 </div>
 <div class="toolbar">
-  <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
+  <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote', :default => true, :icon => 'add') %>
   <%= button_link_to('Close', return_path, :class => 'cancel')%>
 </div>
 <% else -%>

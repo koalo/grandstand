@@ -10,7 +10,7 @@ module Grandstand
         end
         unless errors.empty?
           @template.content_tag(:ul, :class => 'errors') do
-            errors.join("\n")
+            @template.raw errors.join("\n")
           end
         end
       end

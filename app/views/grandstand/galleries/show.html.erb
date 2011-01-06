@@ -1,16 +1,17 @@
-<% content_for :left do %>
-  <%= button_link_to('Upload An Image', new_grandstand_gallery_image_path(@gallery), :class => 'remote', :icon => 'upload') %>
-  <%= button_link_to('Upload Multiple', upload_grandstand_gallery_images_path(@gallery), :class => 'remote', :icon => 'upload') %>
-<% end %>
-<h1 class="galleries icon">
-  <%= @gallery.name %>
+<% content_for :title do %>
   <%= button_link_to('Edit', edit_grandstand_gallery_path(@gallery), :class => 'remote', :icon => 'edit') %>
   <%= button_link_to('Delete', delete_grandstand_gallery_path(@gallery), :class => 'remote', :icon => 'delete') %>
-</h1>
+  <% if Grandstand.multiple_upload -%>
+  <%= button_link_to('Add Images', upload_grandstand_gallery_images_path(@gallery), :class => 'remote', :icon => 'add') %>
+  <% else -%>
+  <%= button_link_to('Add An Image', new_grandstand_gallery_image_path(@gallery), :class => 'remote', :icon => 'add') %>
+  <% end -%>
+<% end %>
+<h2><%= @gallery.name %></h2>
 <% if @gallery.images.empty? -%>
-<div class="inset">
-  <h2>You haven't uploaded any images!</h2>
-  <b class="grey">Get started:</b> <%= button_link_to('Upload an Image', new_grandstand_gallery_image_path(@gallery), :class => 'remote') %>
+<div class="pad">
+  <h3>You haven't uploaded any images!</h3>
+  <%= button_link_to('Add an Image', new_grandstand_gallery_image_path(@gallery), :class => 'remote', :icon => :add) %>
 </div>
 <% else -%>
 <div class="images sortable">

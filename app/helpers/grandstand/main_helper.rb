@@ -1,4 +1,21 @@
 module Grandstand::MainHelper
+  # Returns 'active' if the current page matches the passed URL hash. This will
+  # require the controller to match. If one or more action is passed, those actions
+  # (or params[:return_to]) must match as well. If not, it lets the controller mean
+  # it's active.
+  def active_on(*conditions)
+    match = lambda do |condition|
+      controllers = Array(condition.delete(:controller)).compact.flatten.map(&:to_s).uniq
+      actions = Array(condition.delete(:action)).compact.map(&:to_s).flatten.uniq
+      controllers.include?(controller_name) && (actions.empty? || actions.include?(action_name) || actions.include?(params[:return_to]))
+    end
+    options = {}
+    if conditions.any?(&match)
+      options[:class] = 'active'
+    end
+    options
+  end
+
   # Renders a <button> tag. Helpful for forms and the like.
   # 
   #   <%= button("Save Changes", :class => "blue") %>

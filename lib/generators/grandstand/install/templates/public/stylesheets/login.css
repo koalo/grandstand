@@ -2,15 +2,15 @@
 @import url('global.css');
 
 body.grandstand {
-  background-color:#eee;
-  background-image:none;
+  background-color:#c9d1d3;
 }
 
 #logo {
   left:50%;
-  margin-left:-190px;
+  margin-left:-200px;
   position:absolute;
   top:100px;
+  width:400px;
 }
 
 #login {
@@ -18,7 +18,7 @@ body.grandstand {
   left:50%;
   margin:0 0 0 -200px;
   position:absolute;
-  padding:2em;
+  padding:2em 2em 3em 2em;
   top:135px;
   width:400px;
   -moz-box-sizing:border-box;
@@ -26,4 +26,12 @@ body.grandstand {
   -webkit-box-sizing:border-box;
   -moz-border-radius:5px;
   -webkit-border-radius:5px;
+}
+
+#footer {
+  bottom:1em;
+  font-size:8pt;
+  position:absolute;
+  text-align:center;
+  width:100%;
 }

@@ -18,7 +18,7 @@
       <td><%= post.posted_at.to_date %>
       <td class="actions">
         <%= button_link_to 'Edit', edit_grandstand_post_path(post), :icon => :edit %>
-        <%= button_link_to 'Delete', delete_grandstand_post_path(post), :icon => :delete %>
+        <%= button_link_to 'Delete', delete_grandstand_post_path(post), :class => 'remote', :icon => :delete %>
       </td>
     </tr>
     <% end -%>

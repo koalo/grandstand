@@ -1,8 +1,0 @@
-<h1><%= current_page.name %></h1>
-<% current_page.page_sections.group_by(&:section).each do |section_name, page_sections| %>
-<% content_for(section_name.to_sym) do -%>
-<% page_sections.sort_by(&:position).each do |page_section| -%>
-  <%= page_content(page_section) %>
-<% end -%>
-<% end -%>
-<% end %>

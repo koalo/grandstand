@@ -1,9 +1,14 @@
-<%= render :partial => 'left' %>
-<h1 class="posts icon">Blog Posts</h1>
+<% content_for :title do %>
+  <% if blog_images = Grandstand::Gallery.where(:published => false).first -%>
+  <%= button_link_to('Image Library', grandstand_gallery_path(blog_images), :icon => 'image-library') %>
+  <% end -%>
+  <%= button_link_to('Add a Post', new_grandstand_post_path, :icon => 'add') %>
+<% end %>
+<h2>Blog Posts</h2>
 <% if @posts.empty? -%>
-<div class="inset">
-  <h2>You haven't written any posts!</h2>
-  <b class="grey">Get started:</b> <%= button_link_to('Add a Post', new_grandstand_post_path, :icon => 'add') %>
+<div class="pad">
+  <h3>You haven't written any posts!</h3>
+  <%= button_link_to('Add One Now?', new_grandstand_post_path, :icon => 'add') %>
 </div>
 <% else -%>
 <%= render :partial => 'list', :locals => {:posts => @posts} %>

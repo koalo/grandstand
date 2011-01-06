@@ -1,16 +1,15 @@
-<%= render :partial => 'left' %>
 <% content_for :head do -%>
   <%= stylesheet_link_tag '/grandstand/stylesheets/wysiwyg.css' %>
 <% end -%>
 <% wrap_grandstand_form do -%>
-  <div class="field">
+  <!-- <div class="field">
     <%= form.label :parent_id %>
-    <%#= form.collection_select :parent_id, Page.tree, :id, :tree_name %>
-  </div>
+    <%#= form.collection_select :parent_id, Grandstand::Page.tree, :id, :tree_name %>
+  </div> -->
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name, :class => 'oversized text' %>
-    <%= errors_on :page, :name %>
+    <%= form.errors_on :name %>
   </div>
   <div class="tabset">
     <ul class="tabs">

@@ -1,4 +1,6 @@
 class Grandstand::User < ActiveRecord::Base
+  set_table_name :grandstand_users
+
   attr_accessor :password
   attr_accessible :email, :first_name, :last_name, :password, :password_confirmation
 

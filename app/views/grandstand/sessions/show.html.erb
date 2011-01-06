@@ -1,4 +1,4 @@
-<h1>Log In</h1>
+<h2>Log In</h2>
 <% form_tag(grandstand_session_path) do %>
   <p>
     <label for="email">E-mail</label>
@@ -8,5 +8,5 @@
     <label for="password">Password</label>
     <%= password_field_tag(:password, '', :class => 'oversized text') %>
   </p>
-  <%= button 'Log In', :class => 'grey' %> <%= button_link_to 'Forgot Your Password?', forgot_grandstand_session_path %>
+  <%= button 'Log In', :default => true %> <%= button_link_to 'Forgot Your Password?', forgot_grandstand_session_path %>
 <% end %>

@@ -1,3 +1,25 @@
-<%= render :partial => 'left' %>
-<h1 class="pages icon"><%= @page.name %> <%= button_link_to('Edit', edit_grandstand_page_path(@page), :icon => 'edit') %></h1>
-<div class="quiet"><%= link_to url = page_url(@page.url), url %></div>
+<% content_for :title do %>
+  <%= button_link_to('Edit', edit_grandstand_page_path(@page), :icon => 'edit') %>
+<% end %>
+<h2><%= @page.name %> <%= link_to url = page_url(@page.url), url, :class => 'external icon' %></h2>
+<% if @page.page_sections.size == 1 -%>
+<div class="pad">
+  <%= page_content(@page.page_sections.first) %>
+</div>
+<% else -%>
+<div class="tabset pad">
+  <ul class="tabs">
+    <% @page.page_sections.each do |page_section| -%>
+    <li>
+      <a href="#page-section-<%= page_section.id %>"><%= page_section.section.titleize %></a>
+    </li>
+    <% content_for :page_sections do -%>
+  <div class="page-section" id="page-section-<%= page_section.id %>">
+    <%= page_content(page_section) %>
+  </div>
+    <% end -%>
+  <% end -%>
+  </ul>
+  <%= yield :page_sections %>
+</div>
+<% end -%>

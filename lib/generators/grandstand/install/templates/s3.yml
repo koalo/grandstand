@@ -1,0 +1,8 @@
+development:
+  access_key_id: your_aws_s3_access_key_here
+  secret_access_key: the_same_thing_but_this_time_give_me_the_secret_thingy
+
+production:
+  access_key_id: your_production_aws_s3_access_key_here
+  secret_access_key: cause_i_recommend_you_not_accidentally_delete_production_files_in_development
+  

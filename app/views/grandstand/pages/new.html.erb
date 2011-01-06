@@ -1,8 +1,11 @@
-<h1 class="pages icon">New Page</h1>
+<% content_for :title do %>
+  <%= button_link_to('Cancel', return_path || grandstand_page_path(@page)) %>
+<% end %>
+<h2>New Page</h2>
 <%= form_for(@page, :as => :page, :url => grandstand_pages_path) do |form| %>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
-    <%= button 'Add Page' %>
-    <%= button_link_to('Cancel', grandstand_pages_path, :class => 'cancel') %>
+    <%= button 'Add Page', :default => true %>
+    <%= button_link_to 'Cancel', grandstand_pages_path, :class => 'cancel' %>
   </div>
 <% end =%>

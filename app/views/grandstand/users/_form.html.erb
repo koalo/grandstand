@@ -3,14 +3,18 @@
     <%= form.label :first_name %>
     <%= form.text_field :first_name, :class => 'half oversized text' %>
     <%= form.text_field :last_name, :class => 'half oversized text' %>
-    <%= form.errors_on(:user, :first_name) %>
+    <%= form.errors_on :first_name %>
   </div>
   <div class="field">
     <%= form.label :email %>
     <%= form.text_field :email, :class => 'text' %>
   </div>
   <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password, :autocomplete => 'off', :class => 'text' %>
+    <%= form.label :password, @user.new_record? ? nil : 'New password' %>
+    <%= form.password_field :password, :autocomplete => 'off', :class => 'text' %>
+  </div>
+  <div class="field">
+    <%= form.label :password_confirmation, 'Password (again!)' %>
+    <%= form.password_field :password_confirmation, :autocomplete => 'off', :class => 'text' %>
   </div>
 <% end -%>

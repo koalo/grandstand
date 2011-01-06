@@ -1,4 +1,6 @@
 class Grandstand::Post < ActiveRecord::Base
+  set_table_name :grandstand_posts
+
   before_save :set_url
   before_validation :set_posted_at
   belongs_to :user

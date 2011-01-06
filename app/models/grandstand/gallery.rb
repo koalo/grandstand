@@ -1,7 +1,8 @@
 class Grandstand::Gallery < ActiveRecord::Base
+  set_table_name :grandstand_galleries
   before_save :set_url
   belongs_to :user
-  default_scope order('position, id')
+  default_scope order('published, position, id ASC')
   has_many :images, :dependent => :destroy
 
   validates_presence_of :name, :message => 'Your gallery needs a name'

@@ -1,8 +1,11 @@
-<h1 class="posts icon">New Blog Post</h1>
+<% content_for :title do %>
+  <%= button_link_to('Cancel', return_path || grandstand_post_path(@post)) %>
+<% end %>
+<h2>New Blog Post</h2>
 <% form_for(@post, :as => :post, :url => grandstand_posts_path) do |form| -%>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
-    <%= button 'Add Post' %>
+    <%= button 'Add Post', :default => true %>
     <%= button_link_to('Cancel', grandstand_posts_path, :class => 'cancel') %>
   </div>
 <% end -%>

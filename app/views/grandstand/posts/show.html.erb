@@ -1,8 +1,6 @@
-<%= render :partial => 'left' %>
-<h1 class="posts icon">
-  <%= @post.name %>
+<% content_for :title do %>
   <%= button_link_to('Edit', edit_grandstand_post_path(@post), :icon => 'edit') %>
   <%= button_link_to('Delete', delete_grandstand_post_path(@post), :class => 'remote', :icon => 'delete') %>
-</h1>
-<div class="quiet"><%= link_to url = post_url(@post.posted_at.year, @post.posted_at.month, @post.url), url %></div>
+<% end %>
+<h2><%= @post.name %> <%= link_to url = post_url(@post.posted_at.year, @post.posted_at.month, @post.url), url, :class => 'external icon' %></h2>
 <%= raw @post.body %>

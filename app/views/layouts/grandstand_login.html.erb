@@ -5,13 +5,16 @@
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
   <title><% if current_page %><%= current_page.title %> - <% end %>Grandstand</title>
   <%= javascript_include_tag('/grandstand/javascripts/jquery', '/grandstand/javascripts/application') %>
-  <%= stylesheet_link_tag('/grandstand/stylesheets/global', '/grandstand/stylesheets/login') %>
+  <%= stylesheet_link_tag('/grandstand/stylesheets/login') %>
 </head>
 <body class="grandstand">
   <%= render :partial => 'grandstand/shared/flash', :locals => {:flash => flash} %>
-  <%= link_to(image_tag('/grandstand/images/logo.png', :alt => Grandstand.app_name), grandstand_root_path, :id => 'logo') %>
+  <h1 id="logo"><%= link_to(Grandstand.app_name, grandstand_root_path) %></h1>
   <div class="inset" id="login">
     <%= yield %>
+    <div id="footer">
+      <%= render :partial => 'grandstand/shared/footer' %>
+    </div>
   </div>
 </body>
 </html>

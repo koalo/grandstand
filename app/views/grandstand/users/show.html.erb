@@ -1,11 +1,14 @@
-<%= render :partial => 'left' %>
-<h1 class="users icon"><%= @user.name %> <%= button_link_to('Edit', edit_grandstand_user_path(@user), :class => 'remote', :icon => 'edit') %></h1>
+<% content_for :title do %>
+  <%= button_link_to('Edit', edit_grandstand_user_path(@user), :class => 'remote', :icon => 'edit') %>
+  <%= button_link_to('Delete', delete_grandstand_user_path(@user), :class => 'remote', :icon => 'delete') unless @user.id == current_user.id %>
+<% end %>
+<h2><%= @user.name %></h2>
 <% unless @user.posts.empty? -%>
-<h2>Blog Posts</h2>
+<h3>Blog Posts</h3>
 <%= render :partial => 'grandstand/posts/list', :locals => {:posts => @user.posts} %>
 <% end -%>
 <% unless @user.galleries.empty? -%>
-<h2>Galleries</h2>
+<h3>Galleries</h3>
 <div class="galleries">
   <%= render :partial => 'grandstand/galleries/list', :locals => {:galleries => @user.galleries} %>
 </div>

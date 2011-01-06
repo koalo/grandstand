@@ -1,19 +1,22 @@
-<%= render :partial => 'left' %>
-<h1 class="pages icon">Pages</h1>
+<% content_for :title do %>
+  <%= button_link_to('Add a Page', new_grandstand_page_path, :icon => 'add') %>
+<% end %>
+
+<h2>Pages</h2>
 <% if @pages.empty? -%>
-<div class="inset">
-  <h2>You haven't created any pages!</h2>
-  <b class="grey">Get started:</b> <%= button_link_to('Add a Page', new_grandstand_page_path, :icon => 'add') %>
+<div class="pad">
+  <h3>You haven't created any pages!</h3>
+  <%= button_link_to('Add One Now?', new_grandstand_page_path, :icon => 'add') %>
 </div>
 <% else -%>
 <table class="grid">
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="2">URL</th>
+      <th colspan="3">URL</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="sortable pages">
     <%= render :partial => 'row', :collection => @pages, :as => :page, :locals => {:indent => 0} %>
   </tbody>
 </table>

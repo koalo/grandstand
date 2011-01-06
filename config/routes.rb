@@ -32,6 +32,10 @@ Rails::Application.routes.draw do |map|
     end
 
     resources :pages do
+      collection do
+        post :reorder
+      end
+
       member do
         get :delete
       end
@@ -52,6 +56,7 @@ Rails::Application.routes.draw do |map|
     end
   end
 
+  match '*url', :to => 'pages#show', :as => 'page'
   # if Rails.env.development?
   #   require 'grandstand/stylesheets_controller'
   #   namespace :grandstand do

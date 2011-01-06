@@ -2,7 +2,7 @@
 <% form_for(@gallery, :as => :gallery, :html => {:method => :delete}, :url => grandstand_gallery_path(@gallery)) do %>
   <div class="field">You cannot undo this once it's done! This gallery, and all of its pictures, will be gone forever - poof!</div>
   <div class="toolbar">
-    <%= button('Delete', :default => true) %>
-    <%= button_link_to('Cancel', return_path || grandstand_gallery_path(@gallery), :class => 'cancel') %>
+    <%= button 'Delete', :default => true %>
+    <%= button_link_to 'Cancel', return_path || grandstand_gallery_path(@gallery), :class => 'cancel' %>
   </div>
 <% end %>

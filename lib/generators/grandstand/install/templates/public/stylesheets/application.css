@@ -5,7 +5,6 @@
 /* HTML Elements */
 body {
   background-color:#3b3737;
-  background-image:none;
   margin:0;
   padding:5px 50px 10px 50px;
 }
@@ -54,7 +53,7 @@ table tbody, table tr {
 #menu li, .ui-tabs-nav li {
   display:block;
   float:left;
-  margin-right:0.4em;
+  margin-left:0.4em;
 }
 
 #menu li a, .ui-tabs-nav li a {
@@ -88,10 +87,12 @@ table tbody, table tr {
 }
 
 #menu li a.active, .ui-tabs-nav li.ui-state-active a {
-  background-color:#c9d1d3;
+  background-color:#ededed;
+  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #f7f7f7), color-stop(1, #ededed));
   color:#000;
   position:relative;
   z-index:3;
+  -webkit-box-shadow:inset #f7f7f7 0 1px 2px;
 }
 
 #menu li#posts a {
@@ -113,18 +114,21 @@ table tbody, table tr {
 #toolbar {
   float:right;
   overflow:hidden;
-  padding:1em;
+  padding:1.2em;
 }
 
 #content {
   background-color:#f7f7f7;
   clear:both;
   height:100%;
+  max-width:1500px;
+  min-width:750px;
   overflow:hidden;
   position:relative;
   z-index:2;
-  -webkit-border-radius:3px;
-  -webkit-box-shadow:rgba(0, 0, 0, 0.5) 0 0 5px;
+  -webkit-border-radius:5px;
+  -moz-box-shadow:#333 0 0 2px;
+  -webkit-box-shadow:#333 0 0 2px;
   /*  box-sizing:border-box;
   -moz-box-sizing:border-box;
   -ms-box-sizing:border-box;
@@ -133,11 +137,14 @@ table tbody, table tr {
 }
 
 #content h2 {
-  background-color:#c9d1d3;
+  background-color:#ededed;
+  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0.03, #ededed), color-stop(1, #c4c4c4));
   border-bottom:1px solid #aaa;;
   color:#3b3737;
+  font-weight:bold;
   margin:0;
   padding:0.5em;
+  text-shadow:rgba(255, 255, 255, 0.8) 0 1px 0px;
   -webkit-border-top-left-radius:3px;
   -webkit-border-top-right-radius:3px;
 }
@@ -153,13 +160,15 @@ table tbody, table tr {
 }
 
 #footer {
-  background-color:#c9d1d3;
+  background-color:#cacaca;
+  background-image:-moz-linear-gradient(top, #cacaca, #a7a7a7);
+  background-image:-webkit-gradient(linear, left top, left bottom, from(#cacaca), to(#a7a7a7));  
   border-top:1px solid #aaa;
   clear:both;
   font-size:8pt;
   padding:1em;
-  -webkit-border-bottom-left-radius:5px;
-  -webkit-border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:3px;
+  -webkit-border-bottom-right-radius:3px;
 }
 
 /* Generic Classes */
@@ -262,6 +271,10 @@ table tbody, table tr {
   background-image:url(../images/icons/gallery.png);
 }
 
+.icon.galleries {
+  background-image:url(../images/icons/galleries.png);
+}
+
 .icon.image {
   background-image:url(../images/icons/image.png);
 }
@@ -272,6 +285,14 @@ table tbody, table tr {
 
 .icon.okay {
   background-image:url(../images/icons/okay.png);
+}
+
+.icon.pages {
+  background-image:url(../images/icons/pages.png);
+}
+
+.icon.posts {
+  background-image:url(../images/icons/posts.png);
 }
 
 .icon.processing {
@@ -328,7 +349,8 @@ table.grid tbody tr.two {
 
 /* jQuery UI */
 .ui-tabs-panel {
-  background:#c9d1d3;
+  background:#ededed;
+  background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0.03, #ededed), color-stop(1, #c4c4c4));
   clear:both;
   padding:1em;
   position:relative;

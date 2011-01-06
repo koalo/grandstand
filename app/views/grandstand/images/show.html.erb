@@ -1,5 +1,5 @@
 <h2>Edit Embedded Image</h2>
-<form action="<%= request.fullpath %>" class="pad" method="POST">
+<form action="<%= request.fullpath %>" method="POST">
   <div class="field">
     <img alt="<%= @image.caption %>" class="float-left" src="<%= @image.url(:grandstand_medium) %>" style="margin:0 10px 10px 0;" />
     <div class="label">Alignment</div>
@@ -28,6 +28,6 @@
   </div>
   <div class="toolbar">
     <%= button 'Update', :default => true %>
-    <%= button_link_to('Cancel', return_path, :class => 'cancel') %>
+    <%= button_link_to 'Cancel', return_path, :class => 'cancel' %>
   </div>
 </form>

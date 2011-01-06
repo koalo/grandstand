@@ -1,4 +1,5 @@
 class Grandstand::Image < ActiveRecord::Base
+  set_table_name :grandstand_images
   belongs_to :gallery
   belongs_to :user
   default_scope order('position, id')

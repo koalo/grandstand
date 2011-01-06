@@ -7,8 +7,12 @@ class Grandstand::ImagesController < Grandstand::MainController
   def create
     @image = @gallery.images.new(params[:image])
     if @image.save
-      flash[:success] = 'Your image was successfully uploaded'
-      params.has_key?('Filename') || request.xhr? ? render(:json => {:status => :ok}) : redirect_to(grandstand_gallery_path(@gallery))
+      if params.has_key?('Filename') || request.xhr?
+        render(:json => {:status => :ok})
+      else
+        flash[:success] = 'Your image was successfully uploaded'
+        redirect_to(grandstand_gallery_path(@gallery))
+      end
     else
       render :new
     end
@@ -51,7 +55,9 @@ class Grandstand::ImagesController < Grandstand::MainController
     end
   end
 
-  def upload
+  if Grandstand.multiple_upload
+    def upload
+    end
   end
 
   protected

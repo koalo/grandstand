@@ -2,7 +2,7 @@
 <% form_for(@user, :as => :user, :url => grandstand_users_path) do |form| -%>
   <%= render :partial => 'form', :locals => {:form => form} %>
   <div class="toolbar">
-    <%= button 'Add User' %>
+    <%= button 'Add User', :default => true %>
     <%= button_link_to('Cancel', grandstand_users_path, :class => 'cancel') %>
   </div>
 <% end -%>

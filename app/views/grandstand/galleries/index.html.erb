@@ -1,11 +1,11 @@
-<% content_for :left do %>
+<% content_for :title do %>
   <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
 <% end %>
+<h2>Galleries</h2>
 <% if @galleries.empty? -%>
-<div class="inset">
-  <h2 class="">You haven't set up any galleries!</h2>
-  <%= image_tag('/grandstand/images/galleries-empty.png') %>
-  <br /><b class="grey">Get started:</b> <%= button_link_to('Add a Gallery', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
+<div class="pad">
+  <h3>You haven't set up any galleries!</h3>
+  <%= button_link_to('Add One Now?', new_grandstand_gallery_path, :class => 'remote', :icon => 'add') %>
 </div>
 <% else -%>
 <div class="galleries sortable">

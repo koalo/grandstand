@@ -6,12 +6,12 @@
 }
 
 .grandstand .wysiwyg .toolbar {
-  /*  #grandstand > .styled-toolbar;*/
   border-bottom:1px solid #444;
   position:relative;
 }
 
 .grandstand .wysiwyg .toolbar .button {
+  height:17px;
   line-height:0 !important;
   padding:3px;
 }
@@ -46,7 +46,7 @@
   border-right:1px solid #c3c3c3;
   border-top:1px solid #7d7d7d;*/
   display:block;
-  height:400px;
+  height:600px;
   width:100%;
   -webkit-border-bottom-left-radius:3px;
   -webkit-border-bottom-right-radius:3px;

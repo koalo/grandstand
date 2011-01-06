@@ -1,4 +1,6 @@
 class Grandstand::Page < ActiveRecord::Base
+  set_table_name :grandstand_pages
+
   attr_writer :new_parent_slug
 
   after_update :update_children
@@ -6,6 +8,8 @@ class Grandstand::Page < ActiveRecord::Base
 
   belongs_to :parent, :class_name => 'Page'
   belongs_to :user
+
+  default_scope order('position, id')
 
   has_many :children, :class_name => 'Page', :foreign_key => :parent_id
   has_many :page_sections, :dependent => :destroy

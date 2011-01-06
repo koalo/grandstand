@@ -12,6 +12,13 @@ class Grandstand::GalleriesController < Grandstand::MainController
     end
   end
 
+  def delete
+    unless @gallery.published?
+      flash[:error] = 'You cannot delete this gallery. It is required by the system.'
+      redirect_to return_path || grandstand_galleries_path
+    end
+  end
+
   def destroy
     @gallery.destroy
     flash[:delete] = 'Your gallery has been deleted'
@@ -19,9 +26,11 @@ class Grandstand::GalleriesController < Grandstand::MainController
   end
 
   def index
-    @galleries = Grandstand::Gallery.all
     if request.xhr?
+      @galleries = Grandstand::Gallery.all
       render :editor
+    else
+      @galleries = Grandstand::Gallery.where(:published => true).all
     end
   end
 

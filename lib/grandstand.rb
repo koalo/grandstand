@@ -3,6 +3,7 @@ gem 'aws-s3'
 require 'aws/s3'
 require 'mustache'
 require 'paperclip'
+require 'will_paginate'
 
 require 'grandstand/application'
 
@@ -55,8 +56,16 @@ module Grandstand
       @images_sizes = new_image_sizes
     end
 
+    def multiple_upload
+      @multiple_upload ||= false
+    end
+
+    def multiple_upload=(new_multiple_upload)
+      @multiple_upload = !!new_multiple_upload
+    end
+
     def page_sections # :nodoc:
-      @page_sections ||= %w(left main)
+      @page_sections ||= %w(main)
     end
 
     def page_sections=(new_page_sections) # :nodoc:

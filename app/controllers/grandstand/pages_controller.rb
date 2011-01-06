@@ -1,5 +1,5 @@
 class Grandstand::PagesController < Grandstand::MainController
-  before_filter :find_page, :except => [:create, :index, :new]
+  before_filter :find_page, :except => [:create, :index, :new, :reorder]
   before_filter :build_page_sections, :only => [:edit]
 
   def create
@@ -26,6 +26,13 @@ class Grandstand::PagesController < Grandstand::MainController
   def new
     @page = Grandstand::Page.new
     build_page_sections
+  end
+
+  def reorder
+    params[:pages].each_with_index do |page_id, index|
+      Grandstand::Page.update(page_id, :position => index + 1)
+    end if params[:pages]
+    render :json => {:status => :ok}
   end
 
   def update
