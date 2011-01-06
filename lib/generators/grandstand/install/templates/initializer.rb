@@ -1,21 +1,27 @@
 case Rails.env
 when 'development'
-  Grandstand.admin[:domain] = 'localhost'
+  Grandstand.routing = {
+    :domain => 'localhost',
+    :ssl => false
+  }
+  Grandstand.s3[:bucket] = 'changeme'
 when 'production'
-  Grandstand.admin[:domain] = 'example.com'
+  Grandstand.routing = {
+    # :domain => 'example.com',
+    # :ssl => true
+  }
+  Grandstand.s3[:bucket] = 'changeme_for_production'
 end
 
+# Comment this in ONLY if you're using SSL. It opens up a Rack-based security hole otherwise!
+# Grandstand.multiple_upload = true
+
+# Use the following to set which areas of a page you'd like to edit with Grandstand.
+# Grandstand.page_sections = %w(left main)
+
+# Add your own image sizes here. Accepts any basic ImageMagick geometry string, as well as the
+# Paperclip-specific extensions
 Grandstand.image_sizes = {
-  # Add your own image sizes here. Accepts any basic ImageMagick geometry string (including the
-  # Paperclip-specific extensions)
   # :icon => '75x75#',
   # :page => '541x'
 }
-
-Grandstand.s3[:bucket] = 'changeme'
-Grandstand.routing[:domain] = 'fmi.heroku.com'
-
-# Comment this in for Heroku, which likes this for Paperclip to work.
-# if Rails.env.development?
-#   Paperclip.options[:bin_path] = '/usr/local/bin/identify'
-# end

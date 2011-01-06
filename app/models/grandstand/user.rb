@@ -55,15 +55,15 @@ class Grandstand::User < ActiveRecord::Base
   end
 
   # Returns a hash of a given password string. Used both for storing
-  # passwords and authenticating later. The DIGEST_STRETCHES constant
+  # passwords and authenticating later. The digest_stretches method
   # ensures passwords are hashed more than once - which prevents brute-
   # force attacks from being even remotely efficient. Take that, hacker
   # dickheads.
   def password_digest(password)
-    password_digest = SITE_KEY
+    password_digest = Grandstand.site_key
     # Perform stretching per RESTful Authentication's guidelines
-    DIGEST_STRETCHES.times do
-      password_digest = Digest::SHA1.hexdigest([password_digest, salt, password, SITE_KEY].join('--'))
+    Grandstand.digest_stretches.times do
+      password_digest = Digest::SHA1.hexdigest([password_digest, salt, password, Grandstand.site_key].join('--'))
     end
     password_digest
   end

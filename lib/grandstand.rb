@@ -14,28 +14,24 @@ require 'grandstand/application'
 # down as you see fit.
 module Grandstand
   class << self
-    # Returns a hash for the Grandstand interface's routing configuration. Options include
-    # 
-    #   :ssl => Require SSL whenever a user is in the Grandstand interface
-    def routing
-      @routing ||= {:ssl => true}
-    end
-
-    # Pass in a hash to set multiple routing options at once.
-    def routing=(routing)
-      @routing = new_routing
-    end
-
-    def routing_options # :nodoc:
-      routing_options = {}
-      # if Grandstand.routing[:domain]
-      #   routing_options.merge!(:path => '', :constraints => {:domain => Grandstand.routing[:domain]})
-      # end
-      routing_options
-    end
-
     def app_name # :nodoc:
       @app_name ||= 'Grandstand'
+    end
+
+    def bcrypt_cost
+      @bcrypt_cost ||= 13
+    end
+
+    def bcrypt_cost=(new_bcrypt_cost)
+      @bcrypt_cost = new_bcrypt_cost.to_i
+    end
+
+    def digest_stretches
+      @digest_stretches ||= 10
+    end
+
+    def digest_stretches=(new_digest_stretches)
+      @digest_stretches = new_digest_stretches.to_i
     end
 
     # Image sizes returns the current hash of custom image sizes you've set up for your users. You can
@@ -72,6 +68,26 @@ module Grandstand
       @page_sections = new_page_sections
     end
 
+    # Returns a hash for the Grandstand interface's routing configuration. Options include
+    # 
+    #   :ssl => Require SSL whenever a user is in the Grandstand interface
+    def routing
+      @routing ||= {}
+    end
+
+    # Pass in a hash to set multiple routing options at once.
+    def routing=(new_routing)
+      @routing = new_routing
+    end
+
+    def routing_options # :nodoc:
+      routing_options = {}
+      # if Grandstand.routing[:domain]
+      #   routing_options.merge!(:path => '', :constraints => {:domain => Grandstand.routing[:domain]})
+      # end
+      routing_options
+    end
+
     # Grandstand uses Paperclip to process and store uploaded gallery images to S3. By default, it reads
     # those configuration options from config/s3.yml, but you can also specify credentials or anything else
     # here, like so:
@@ -92,6 +108,14 @@ module Grandstand
     #   Grandstand.s3 = {:bucket => "yourmom", :credentials => {:access_key_id => "foo", :secret_access_key => "bar"}}
     def s3=(new_s3)
       @s3 = new_s3
+    end
+
+    def site_key
+      @site_key ||= %(They say the truth shall come to the light, so everybody grab your shades cuz ya boy's that bright)
+    end
+
+    def site_key=(new_site_key)
+      @site_key = new_site_key.to_s
     end
   end
 end

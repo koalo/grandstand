@@ -1,9 +1,7 @@
 class Grandstand::MainController < ApplicationController
   skip_before_filter :find_page
   before_filter :require_user
-  if Rails.env.production?
-    before_filter :require_ssl
-  end
+  before_filter :require_ssl if Grandstand.routing[:ssl]
   before_filter :set_return_path, :only => [:index, :show]
 
   layout :grandstand_layout
@@ -24,7 +22,7 @@ class Grandstand::MainController < ApplicationController
   end
 
   def grandstand_not_found(options = {})
-    options = {:layout => 'minimal', :status => 404, :template => 'shared/404'}.merge(options)
+    options = {:layout => 'grandstand_minimal', :status => 404, :template => 'shared/404'}.merge(options)
     render options
     false
   end

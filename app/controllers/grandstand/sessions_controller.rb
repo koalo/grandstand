@@ -2,7 +2,7 @@ class Grandstand::SessionsController < Grandstand::MainController
   before_filter :require_no_user, :except => [:destroy]
   skip_before_filter :require_user, :except => [:destroy]
   skip_before_filter :set_return_path
-  layout 'grandstand_login'
+  layout 'grandstand_minimal'
 
   def create
     login_attempts = (session[:login_attempts] || 0).next
