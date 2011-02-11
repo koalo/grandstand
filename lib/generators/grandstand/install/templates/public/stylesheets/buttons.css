@@ -30,6 +30,7 @@
   -webkit-box-shadow:rgba(255, 255, 255, 0.7) 0 1px 0;
   -webkit-box-sizing:content-box;
   -webkit-transition:-webkit-box-shadow 0.1s linear;
+  vertical-align:middle;
 }
 
 .grandstand .button:focus:not(:disabled) {
