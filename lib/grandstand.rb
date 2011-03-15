@@ -18,14 +18,6 @@ module Grandstand
       @app_name ||= 'Grandstand'
     end
 
-    def bcrypt_cost
-      @bcrypt_cost ||= 13
-    end
-
-    def bcrypt_cost=(new_bcrypt_cost)
-      @bcrypt_cost = new_bcrypt_cost.to_i
-    end
-
     def digest_stretches
       @digest_stretches ||= 10
     end

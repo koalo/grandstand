@@ -12,6 +12,24 @@ class Grandstand::Gallery < ActiveRecord::Base
     images.first || Grandstand::Image.new
   end
 
+  def to_html(template = nil)
+    template = Grandstand::Template[template || 'gallery'].render
+    @to_html ||= Mustache.render(template, :gallery => {
+      :description => description,
+      :cover => {
+        :caption => cover_image.caption,
+        :id => cover_image.id
+      }.merge(cover_image.sizes),
+      :description => description,
+      :images => images.map{|image| {
+        :caption => image.caption,
+        :id => image.id
+      }.merge(image.sizes)},
+      :name => name,
+      :url => url
+    }).html_safe
+  end
+
   # def to_param
   #   url
   # end

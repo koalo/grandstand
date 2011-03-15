@@ -4,6 +4,6 @@ class GalleriesController < ApplicationController
   end
 
   def show
-    @gallery = Grandstand::Gallery.where(:id => params[:id]).first
+    return not_found unless @gallery = Grandstand::Gallery.where(:url => params[:id]).first
   end
 end

@@ -1,14 +1,16 @@
+{{#gallery}}
+<h1>{{name}}</h1>
 <div id="image">
   {{#cover}}
-  <img alt="{{alt}}" height="{{height}}" src="{{src}}" width="{{width}}" />
+  <img alt="{{caption}}" src="{{#page}}{{src}}{{/page}}"/>
   {{/cover}}
 </div>
 <div id="thumbnails">
   {{#images}}
-  <a href="#image-{{id}}"><img alt="{{alt}}" height="{{height}}" src="{{icon}}" width="{{width}}" /></a>
+  <a href="#image-{{id}}"><img alt="{{caption}}" {{#icon}}height="{{height}}" src="{{src}}" width="{{width}}"{{/icon}} /></a>
   {{/images}}
 </div>
 <div class="post summary">
-  <h2>{{name}}</h2>
   {{{description}}}
 </div>
+{{/gallery}}

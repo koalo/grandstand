@@ -24,10 +24,10 @@ class Grandstand::Template
   end
 
   def path
-    @file.freeze
+    @path ||= @file.freeze
   end
 
   def render
-    @body.freeze
+    @render ||= @body.freeze
   end
 end

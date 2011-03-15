@@ -1,6 +1,7 @@
 # Grandstand
 
-Grandstand is a Rails 3 Gem that allows you to build totally simple blogs and portfolios using a gallery and blog post editor.
+Grandstand is a Rails 3 Gem that allows you to build totally simple blogs and portfolios using a gallery and blog post editor. It uses S3 to store images and
+Mustache to enable designers to quickly override appearances with minimal overhead.
 
 ## 5-Minute Install
 
@@ -12,6 +13,7 @@ To get Grandstand up-and-running in five minutes or less:
 4. And then: `rake db:migrate` and enter an e-mail and password for the first admin user
 5. And then start Rails: `rails s`
 6. Navigate to [http://localhost:3000/grandstand](http://localhost:3000/grandstand) to get started.
+7. Profit.
 
 ## Configuration
 

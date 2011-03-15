@@ -59,22 +59,6 @@ module Grandstand::MainHelper
     [options, icon]
   end
 
-  def expand(*controllers)
-    options = controllers.extract_options!
-    options[:class] = Array(options[:class]).compact
-    options[:class].push(:expandable)
-    section = controllers.first
-    controllers.map!(&:to_s)
-    if controllers.include?(controller_name) || !((session[:expand] ||= []) & controllers).empty?
-      options[:class].push(:expanded)
-    end
-    raw %( class="#{options[:class].join(' ')}")
-  end
-
-  def expand_link(section)
-    link_to(raw('<span></span>'), '#', :class => 'expand', :rel => section)
-  end
-
   def hide(condition)
     raw ' style="display:none;"' if condition
   end

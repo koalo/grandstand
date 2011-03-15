@@ -56,6 +56,10 @@ class Grandstand::Image < ActiveRecord::Base
     end
   end
 
+  def sizes
+    Hash[*Grandstand.image_sizes.keys.map {|size| [size, {:src => file.url(size)}] }.flatten]
+  end
+
   protected
   def file_attached
     errors.add(:file, 'You must upload a file!') if file_file_name.blank?

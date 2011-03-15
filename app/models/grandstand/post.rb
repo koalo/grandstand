@@ -37,7 +37,7 @@ class Grandstand::Post < ActiveRecord::Base
   end
 
   def to_html
-    @to_html ||= Mustache.render(Grandstand::Template.post, as_json)
+    @to_html ||= Mustache.render(Grandstand::Template.post, as_json).html_safe
   end
 
   # def to_param
