@@ -1,5 +1,5 @@
-Rails::Application.routes.draw do |map|
-  namespace :grandstand, Grandstand.routing_options do
+Rails.application.routes.draw do
+  namespace :grandstand do
     resource :session do
       member do
         get :forgot
